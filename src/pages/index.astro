@@ -1,17 +1,68 @@
----
-
----
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<meta name="description" content="Portafolio de artista de instalaciones. Exploro el espacio y la materia a través de intervenciones artísticas. Web oficial de Leyre Serafina." />
+		<title>Leyre Serafina Gutiérrez Cruz</title>
+
+		<style>
+			#splash-screen {
+			position: fixed;
+			top: 0; left: 0; width: 100%; height: 100%;
+			background: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			cursor: pointer;
+			transition: opacity 0.4s ease;
+		}
+
+		#fixed-logo {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			z-index: 9998;
+			display: none; 
+			cursor: pointer; /* Cambia el ratón a una manita */
+    		transition: filter 0.3s ease;
+		}
+
+		#fixed-logo:hover {
+   			 filter: brightness(0.7); /* Oscurece un poco al pasar el ratón */
+		}
+
+		.fade-out {
+			opacity: 0;
+			pointer-events: none;
+		}
+		</style>
 	</head>
 	<body>
+    	<div id="splash-screen">
+		<img src="/vv.jpg" alt="Logo" style="max-width: 600px;" />
+		</div>
+
+		<div id="fixed-logo">
+		<img src="/vv.jpg" alt="Logo" style="max-width: 100px;" />
+		</div>
+
 		<h1>Leyre Serafina</h1>
+		<h2>Gutiérrez Cruz</h2>
+
+		<script>
+		const splash = document.getElementById('splash-screen');
+		const fixed = document.getElementById('fixed-logo');
+
+		splash.addEventListener('click', () => {
+			splash.classList.add('fade-out');
+			fixed.style.display = 'block';
+		});
+		fixed.addEventListener('click', () => {
+        window.location.reload();
+  		  });
+		</script>
 	</body>
 </html>
