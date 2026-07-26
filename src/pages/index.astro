@@ -112,9 +112,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 1rem;  
+            padding: 0.5rem 1rem;  
             background-color: #ffe65d; 
-            border-bottom: 3px solid #faf9f5; 
+            border-bottom: 20px solid #faf9f5; 
             text-decoration: none;
             transition: background-color 0.2s ease;
         }
@@ -139,6 +139,22 @@
         .franja-obra:hover .titulo-obra {
             font-weight: 1000;
         }
+
+		body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('/6566712.jpg');
+		background-repeat: repeat; /* Repite la imagen en mosaico */
+            background-size: 300px; 
+        opacity: 0.7; /* Sube o baja este valor si quieres que el grano se note más o menos */
+        pointer-events: none; /* Imprescindible para que los clics sigan funcionando en los botones */
+		mix-blend-mode: overlay;
+        z-index: 9998; 
+    }
         </style>
     </head>
 
