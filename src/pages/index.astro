@@ -1,154 +1,200 @@
-
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="description" content="ִֶָ𓂃 ࣪˖ ִֶָ🫑་༘࿐" />
-		<title>Leyre Serafina Gutiérrez Cruz</title>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content="ִֶָ𓂃 ࣪˖ ִֶָ🫑་༘࿐" />
+        <title>Leyre Serafina Gutiérrez Cruz</title>
 
-		<style>
-		/*poner la fuente que quiera*/
-		@font-face {
-			font-family: 'AMANO'; 
-			src: url('/fonts/MyUglyHandwriting-Regular.otf') format('opentype'); 
-			font-weight: normal;
-			font-style: normal;
-			font-display: swap;
-		}
-	
-		#splash-screen {
-			position: fixed;
-			top: 0; left: 0; width: 100%; height: 100%;
-			background: white;
-			background: url('/fondo_pared.jpg') no-repeat center center fixed; background-size: cover;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			z-index: 9999;
-			cursor: pointer;
-			transition: opacity 0.4s ease;
-		}
+        <style>
+        body {
+            background-color: white;
+            margin: 0;
+        }
 
-	
-		.fade-out {
-			opacity: 0;
-			pointer-events: none;
-		}
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: white url('/fondo_pared.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            cursor: pointer;
+            transition: opacity 0.4s ease;
+        }
 
-		.obras-franjas-container {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			margin-top: 3rem;
-			gap: 1.5rem;
-    	}
+        @font-face {
+            font-family: 'AMANO'; 
+            src: url('/fonts/MyUglyHandwriting-Regular.otf') format('opentype'); 
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
 
-		/* Cada franja horizontal */
-    	.franja-obra {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 1rem 1rem;  
-			background-color: #ffe65d; 
-			border-bottom: 3px solid #faf9f5; 
-			text-decoration: none;
-			transition: background-color 0.2s ease;
-    	}
+        .fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
 
-    	.franja-obra:hover {
-       		 background-color: #fff695;
-    	}
-		
-    	.titulo-obra {
-			font-family: 'AMANO', sans-serif;
-			font-size: 3rem;
-			font-weight: 900;
-			color: #d2384a; 
-			text-transform: uppercase;
-			margin: 0;
-			margin-left: 2rem;         
-			text-align: right;          
-			letter-spacing: 1px;
-			transition: font-weight 0.1s ease; 
-    	}
+        /* Marquesina roja fina arriba del todo */
+        .marquesina-superior {
+            overflow: hidden;
+            white-space: nowrap;
+            background-color: #d2384a;
+            color: #ffffff;
+            font-family: 'AMANO', sans-serif;
+            font-size: 0.8rem;
+            height: 24px;
+            line-height: 24px;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-		.franja-obra:hover .titulo-obra {
-        	font-weight: 1000;
-		}
-		
+        .marquesina-track {
+            display: inline-block;
+            animation: moverTexto 18s linear infinite;
+        }
 
-    	/* Contenedor para el texto lateral y el garabato */
-    	.detalle-lateral {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    	}
+        .marquesina-track span {
+            display: inline-block;
+            padding-right: 3rem;
+        }
 
-   		.etiqueta-tipo {
-        font-family:'AMANO';
-        font-size: 1rem;
-        color: #d2384a;
-    	}
+        @keyframes moverTexto {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
 
-    	/* El dibujito/garabato al lado del título */
-    	.garabato-obra {
-        height: 35px;
-        width: auto;
-    	}	
-		</style>
-	</head>
+        /* Franja azul con tu nombre */
+        .franja-nombre-azul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background-color: #458fff;
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 3px solid #faf9f5;
+            transition: background-color 0.2s ease;
+        }   
 
-	<body>
-    	<div id="splash-screen">
-		<img src="/v2.svg" alt="Logo" style="max-width: 600px;" />
-		</div>
+        .franja-nombre-azul:hover {
+            background-color: #74aeff;
+        }
 
-		<div class="obras-franjas-container">
-    
-    	<!-- Franjas Obras -->
-    	<a href="/obras/obra-1" class="franja-obra">
-			<h3 class="titulo-obra">Y-URBE</h3>
-			<div class="detalle-lateral">
-				<span class="etiqueta-tipo">Live</span>
-				<img src="/vv.png" alt="dibujo" class="garabato-obra" />
-			</div>
-    	</a>
+        .titulo-nombre-azul {
+            font-family: 'AMANO', sans-serif;
+            font-size: 1.4rem;
+            margin: 0;
+            letter-spacing: 1px;
+        }
 
-		<a href="/obras/obra-2" class="franja-obra">
-			<h3 class="titulo-obra">UNA RAMA +</h3>
-			<div class="detalle-lateral">
-				<span class="etiqueta-tipo">Visuals</span>
-				<img src="/vv.png" alt="dibujo" class="garabato-obra" />
-			</div>
-		</a>
+        .etiqueta-info-azul {
+            font-family: 'AMANO', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
 
-  
-		<a href="/obras/obra-3" class="franja-obra">
-			<h3 class="titulo-obra">EXTRUIR LA DISTANCIA</h3>
-			<div class="detalle-lateral">
-				<span class="etiqueta-tipo">Video</span>
-				<img src="/vv.png" alt="dibujo" class="garabato-obra" />
-			</div>
-		</a>
+        .obras-franjas-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
 
+        /* Franjas de las obras */
+        .franja-obra {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1rem;  
+            background-color: #ffe65d; 
+            border-bottom: 3px solid #faf9f5; 
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
 
-		<a href="/obras/obra-4" class="franja-obra">
-			<h3 class="titulo-obra">DONDE QUEDAN LOS ESPACIOS?</h3>
-			<div class="detalle-lateral">
-				<span class="etiqueta-tipo">Stop-Motion</span>
-				<img src="/vv.png" alt="dibujo" class="garabato-obra" />
-			</div>
-		</a>
+        .franja-obra:hover {
+             background-color: #fff695;
+        }
+        
+        .titulo-obra {
+            font-family: 'AMANO', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #d2384a; 
+            text-transform: uppercase;
+            margin: 0;
+            margin-left: 2rem;        
+            text-align: right;         
+            letter-spacing: 1px;
+            transition: font-weight 0.1s ease; 
+        }
 
-</div>
+        .franja-obra:hover .titulo-obra {
+            font-weight: 1000;
+        }
+        </style>
+    </head>
 
-		<script>
-		const splash = document.getElementById('splash-screen')!;
+    <body>
+        <!-- 1. Pantalla de bienvenida (Splash Screen) -->
+        <div id="splash-screen">
+            <img src="/v2.svg" alt="Logo" style="max-width: 600px;" />
+        </div>
 
-		splash.addEventListener('click', () => {
-			splash.classList.add('fade-out');
-		});
-		</script>
-	</body>
+        <!-- 2. Marquesina roja fina arriba del todo -->
+        <div class="marquesina-superior">
+            <div class="marquesina-track">
+                <span>✧ ARTISTA VISUAL & ESCULTORA ✧ NUEVOS PROYECTOS 2026 ✧ DISPONIBLE PARA COLABORACIONES ✧ </span>
+                <span>✧ ARTISTA VISUAL & ESCULTORA ✧ NUEVOS PROYECTOS 2026 ✧ DISPONIBLE PARA COLABORACIONES ✧ </span>
+            </div>
+        </div>
+
+        <!-- 3. Contenedor de la franja azul y obras -->
+        <div class="obras-franjas-container">
+            <!-- Franja azul de información personal -->
+          
+
+            <!-- Franjas de obras -->
+            <a href="/obras/obra-1" class="franja-obra">
+                <h3 class="titulo-obra">Y-URBE</h3>
+            </a>
+
+            <a href="/obras/obra-2" class="franja-obra">
+                <h3 class="titulo-obra">UNA RAMA +</h3>
+            </a>
+
+            <a href="/obras/obra-3" class="franja-obra">
+                <h3 class="titulo-obra">EXTRUIR LA DISTANCIA</h3>
+            </a>
+
+            <a href="/obras/obra-4" class="franja-obra">
+                <h3 class="titulo-obra">DONDE QUEDAN LOS ESPACIOS?</h3>
+            </a>
+			
+			  <a href="/sobre-mi" class="franja-nombre-azul">
+                <h2 class="titulo-nombre-azul">LEYRE SERAFINA GUTIERREZ CRUZ</h2>
+                <span class="etiqueta-info-azul">+ CV / BIO</span>
+            </a>
+        </div>
+
+        <script>
+            const splash = document.getElementById('splash-screen')!;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('skip') === 'true') {
+                splash.style.display = 'none';
+            } else {
+                splash.addEventListener('click', () => {
+                    splash.classList.add('fade-out');
+                });
+            }
+        </script>
+    </body>
 </html>
