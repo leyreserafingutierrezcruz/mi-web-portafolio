@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="UNA RAMA + — Leyre Serafina Gutiérrez Cruz">
+    <div class="contenido-obra">
+        <h1 class="titulo-obra-interna">UNA RAMA +</h1>
+        
+        <div class="galeria">
+            <img src="/obras/obra2-foto1.jpg" alt="Detalle de Una rama" />
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .contenido-obra {
+        margin-top: 150px;
+        padding: 0 3rem 4rem 3rem;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
+
+    .titulo-obra-interna {
+        font-size: 2.5rem;
+        color: #d2384a;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+    }
+
+    .galeria {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .galeria img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+</style>

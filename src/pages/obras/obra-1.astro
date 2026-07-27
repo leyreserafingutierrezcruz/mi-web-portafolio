@@ -1,64 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
 
-<html lang="es">
-    <head>
+<Layout title="Y-URBE — Leyre Serafina Gutiérrez Cruz">
+    <div class="contenido-obra">
+        <h1 class="titulo-obra-interna">Y-URBE</h1>
         
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>Y-URBE — Leyre Serafina Gutiérrez Cruz</title>
-        <style>
-            /* y-ubre */
-            body {
-                background-color: #faf9f5;
-                font-family: sans-serif;
-                margin: 0;
-                padding: 2rem;
-                color: #333;
-            }
+        <div class="galeria">
+            <img src="/obras/obra1-foto1.jpg" alt="Detalle de Y-URBE" />
+            <img src="/obras/obra1-foto2.jpg" alt="Vista general de Y-URBE" />
+        </div>
+    </div>
+</Layout>
 
-            .volver {
-                display: inline-block;
-                margin-bottom: 2rem;
-                text-decoration: none;
-                color: #d2384a;
-                font-weight: bold;
-            }
+<style>
+    .contenido-obra {
+        margin-top: 150px;
+        padding: 0 3rem 4rem 3rem;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
 
-            h1 {
-                font-size: 2.5rem;
-                color: #d2384a;
-                text-transform: uppercase;
-            }
+    .titulo-obra-interna {
+        font-size: 2.5rem;
+        color: #d2384a;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+    }
 
-            .galeria {
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-                margin-top: 2rem;
-            }
+    .galeria {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
 
-            .galeria img {
-                max-width: 100%;
-                height: auto;
-                border-radius: 4px;
-            }
-        </style>
-    </head>
-    <body>
-
-        <!-- Enlace para volver a la página principal -->
-        <a href="/?skip=true" class="volver">← Volver al inicio</a>
-
-        <main>
-            <h1>Y-URBE</h1>
-            <p>Aquí puedes poner la descripción detallada de la obra, los materiales, año de realización, el concepto...</p>
-
-            <!-- Espacio para las fotos de la obra -->
-            <div class="galeria">
-                <!-- Sube tus fotos a la carpeta public y enlázalas así: -->
-                <img src="/obras/obra1-foto1.jpg" alt="Detalle de Y-URBE" />
-                <img src="/obras/obra1-foto2.jpg" alt="Vista general de Y-URBE" />
-            </div>
-        </main>
-
-    </body>
-</html>
+    .galeria img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+</style>

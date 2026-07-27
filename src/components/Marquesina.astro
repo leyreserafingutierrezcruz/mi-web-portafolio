@@ -1,0 +1,38 @@
+<!-- src/components/Marquesina.astro -->
+<div class="marquesina-superior">
+    <div class="marquesina-track">
+        <span>✧ ARTISTA VISUAL & ESCULTORA ✧ NUEVOS PROYECTOS 2026 ✧ DISPONIBLE PARA COLABORACIONES ✧ </span>
+    </div>
+</div>
+
+<style>
+    .marquesina-superior {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 24px;
+        background-color: #ff0000; /* Asegúrate de que este sea el rojo exacto que usas */
+        overflow: hidden;
+        z-index: 9999;
+    }
+    
+    .marquesina-track {
+        display: flex;
+        white-space: nowrap;
+        animation: moverMarquesina 20s linear infinite;
+    }
+
+    .marquesina-track span {
+        font-family: inherit;
+        font-size: 12px;
+        color: #ffffff;
+        line-height: 24px;
+        padding-right: 50px;
+    }
+
+    @keyframes moverMarquesina {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+</style>
