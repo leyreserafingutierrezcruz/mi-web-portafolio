@@ -4,42 +4,243 @@ import Layout from '../../layouts/Layout.astro';
 
 <Layout title="Y-URBE — Leyre Serafina Gutiérrez Cruz">
     <div class="contenido-obra">
-        <h1 class="titulo-obra-interna">Y-URBE</h1>
+        <!-- Columna izquierda: Título y texto conceptual descolocado -->
+        <div class="columna-izquierda">
+            <h1 class="titulo-obra-lateral">Y-URBE</h1>
+            
+            <div class="texto-conceptual">
+                <p class="parrafo-1">no quiero saber nada de lo que conlleva ocupar.</p>
+                <p class="parrafo-2">quiero reducir todo atisbo de construcción al mínimo posible.</p>
+                <p class="parrafo-3">así sea tratar de lidiar con las complejidades de la verticalidad, ahí veré como se tenga que hacer.</p>
+                <p class="parrafo-4">si no se explora está posibilidad puede que estemos desinteresadamente alejándonos de una tácita norma gravitatoria con los espacios que nos surgen arriba.</p>
+                <p class="parrafo-5">se empieza a considerar la posibilidad de entender el espacio desde un punto natural de vista, desde abajo hacia arriba.</p>
+                <p class="parrafo-6">se acaba de una vez con la casi obligatoria vista cenital de todo el espacio.</p>
+                <p class="parrafo-7">se deja al edificio arriba, y abajo al habitante, para que este deje de tomar una posición que nunca le fue amablemente dada, y cederla</p>
+                <p class="parrafo-8">que el edificio crezca hacia donde quiera en su eje Y, hacia arriba o abajo. que busque todas las formas, pero que en el plano ecotónico que le ofrece la superficie no trate de excederse, que le sea justo con lo que ocupa.</p>
+            </div>
+        </div>
         
-        <div class="galeria">
-            <img src="/obras/obra1-foto1.jpg" alt="Detalle de Y-URBE" />
-            <img src="/obras/obra1-foto2.jpg" alt="Vista general de Y-URBE" />
+        <!-- Contenedor del Stop-Motion (devuelto a su posición centrada original sin margen excesivo) -->
+        <div class="contenedor-stopmotion" id="contenedor-animacion">
+            <img src="/urbe_1.png" alt="Y-URBE fotograma 1" class="fotograma activo" />
+            <img src="/urbe_2.png" alt="Y-URBE fotograma 2" class="fotograma" />
+            <img src="/urbe_3.png" alt="Y-URBE fotograma 3" class="fotograma fotograma-3" />
         </div>
     </div>
+
+    <!-- Footer fijo exacto -->
+    <footer class="footer-global-obra">
+        © 2O26, LEYRE SERAFINA GUTIERREZ CRUZ
+    </footer>
 </Layout>
 
 <style>
+    :global(html), :global(body) {
+        overflow: hidden !important;
+        height: 100vh !important;
+        background-color: #faf9f5 !important;
+        margin: 0;
+    }
+
     .contenido-obra {
-        margin-top: 150px;
-        padding: 0 3rem 4rem 3rem;
-        max-width: 1000px;
-        margin-left: auto;
-        margin-right: auto;
+        margin-top: 0;
+        padding: 0 4rem;
+        display: grid;
+        /* Estructura equilibrada: texto a la izquierda con espacio y la imagen centrada a la derecha */
+        grid-template-columns: 460px 1fr;
+        align-items: center;
         box-sizing: border-box;
+        height: 100vh;
+        width: 100vw;
+        position: relative;
     }
 
-    .titulo-obra-interna {
-        font-size: 2.5rem;
-        color: #d2384a;
-        text-transform: uppercase;
-        margin-bottom: 2rem;
-        letter-spacing: 1px;
-    }
-
-    .galeria {
+    .columna-izquierda {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
+        max-height: 82vh;
+        overflow-y: auto;
+        padding-right: 1.5rem;
+        z-index: 2;
     }
 
-    .galeria img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 4px;
+    .columna-izquierda::-webkit-scrollbar {
+        width: 2px;
+    }
+    .columna-izquierda::-webkit-scrollbar-thumb {
+        background-color: #d2384a;
+    }
+
+    .titulo-obra-lateral {
+        font-size: 2.2rem;
+        color: #d2384a;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .texto-conceptual {
+        font-size: 0.72rem;
+        line-height: 1.45;
+        color: #555;
+        font-family: monospace;
+    }
+
+    /* Descolocamos sutilmente cada párrafo hacia la derecha en diferentes proporciones para darle organicidad sin desbordar */
+    .texto-conceptual p {
+        margin: 0 0 1rem 0;
+    }
+
+    .parrafo-1 { transform: translateX(0px); width: 95%; }
+    .parrafo-2 { transform: translateX(25px); width: 90%; }
+    .parrafo-3 { transform: translateX(10px); width: 92%; }
+    .parrafo-4 { transform: translateX(45px); width: 88%; }
+    .parrafo-5 { transform: translateX(20px); width: 94%; }
+    .parrafo-6 { transform: translateX(60px); width: 85%; }
+    .parrafo-7 { transform: translateX(15px); width: 93%; }
+    .parrafo-8 { transform: translateX(35px); width: 90%; }
+
+    /* Imagen centrada correctamente sin márgenes exagerados */
+    .contenedor-stopmotion {
+        width: 100%;
+        max-width: 1000px;
+        height: 600px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-self: center;
+        cursor: pointer;
+        margin-left: 21rem; /* Ajusta este valor en rem o px para acercarla o alejarla a tu gusto */
+    }
+
+    .fotograma {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center center;
+        opacity: 0;
+        transition: opacity 0.1s ease-in-out;
+        pointer-events: none; 
+    }
+
+    .fotograma-3 {
+        transform: scale(0.95);
+    }
+
+    .fotograma.activo {
+        opacity: 1;
+    }
+
+    .footer-global-obra {
+        position: fixed;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        color: #666;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+        .contenido-obra {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 1.5rem;
+            height: 100vh;
+        }
+        .columna-izquierda {
+            max-height: 25vh;
+            padding-right: 0;
+        }
+        .titulo-obra-lateral {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .texto-conceptual p {
+            transform: none !important;
+            width: 100% !important;
+        }
+        .contenedor-stopmotion {
+            width: 90vw;
+            height: 50vh;
+        }
     }
 </style>
+
+<script>
+    function initStopmotion() {
+        const fotogramas = document.querySelectorAll('.fotograma');
+        const contenedor = document.getElementById('contenedor-animacion');
+        
+        if (fotogramas.length > 0 && contenedor) {
+            let indiceActual = 0;
+            let intervalo: number | null = null;
+            let timeoutReinicio: number | null = null;
+
+            const iniciarAnimacion = () => {
+                if (intervalo !== null) return;
+                intervalo = window.setInterval(() => {
+                    fotogramas[indiceActual].classList.remove('activo');
+                    indiceActual = (indiceActual + 1) % fotogramas.length;
+                    fotogramas[indiceActual].classList.add('activo');
+                }, 500);
+            };
+
+            const detenerAnimacion = () => {
+                if (timeoutReinicio !== null) {
+                    clearTimeout(timeoutReinicio);
+                    timeoutReinicio = null;
+                }
+                if (intervalo !== null) {
+                    clearInterval(intervalo);
+                    intervalo = null;
+                }
+            };
+
+            const programarReinicio = () => {
+                timeoutReinicio = window.setTimeout(() => {
+                    iniciarAnimacion();
+                }, 100);
+            };
+
+            const comprobarPosicionRatones = (e: MouseEvent) => {
+                const rect = contenedor.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const margenX = rect.width * 0.25;  
+                const margenY = rect.height * 0.25; 
+
+                if (
+                    x >= margenX && x <= (rect.width - margenX) &&
+                    y >= margenY && y <= (rect.height - margenY)
+                ) {
+                    detenerAnimacion();
+                } else {
+                    programarReinicio();
+                }
+            };
+
+            contenedor.removeEventListener('mousemove', comprobarPosicionRatones);
+            contenedor.removeEventListener('mouseleave', programarReinicio);
+
+            contenedor.addEventListener('mousemove', comprobarPosicionRatones);
+            contenedor.addEventListener('mouseleave', programarReinicio);
+
+            iniciarAnimacion();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', initStopmotion);
+    document.addEventListener('astro:page-load', initStopmotion);
+</script>

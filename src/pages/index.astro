@@ -12,11 +12,16 @@ import Layout from '../layouts/Layout.astro';
             <a href="/obras/obra-4" class="franja-obra"><h3 class="titulo-obra">DONDE QUEDAN LOS ESPACIOS?</h3></a>
         </div>
         
-        <!-- Franja azul del CV más pequeña y compacta -->
+        <!-- Franja azul del CV compacta -->
         <a href="/leyreserafina" class="franja-nombre-azul franja-azul-compacta">
             <h2 class="titulo-nombre-azul">LEYRE SERAFINA GUTIERREZ CRUZ</h2>
             <span class="etiqueta-info-azul">+ CV / BIO</span>
         </a>
+
+        <!-- Copyright específico y visible para la página principal sin scroll -->
+        <div class="footer-copyright-inicio">
+            © 2O26, LEYRE SERAFINA GUTIERREZ CRUZ
+        </div>
     </div>
 </Layout>
 
@@ -27,14 +32,19 @@ import Layout from '../layouts/Layout.astro';
         height: 100vh !important;
     }
 
+    /* Ocultamos el footer global de las otras páginas solo en este index para evitar duplicados */
+    :global(.footer-copyright) {
+        display: none;
+    }
+
     .contenedor-principal-inicio {
-        margin-top: 135px;
-        height: calc(100vh - 150px);
+        margin-top: 120px;
+        height: calc(100vh - 130px);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         box-sizing: border-box;
-        padding-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
         overflow: hidden;
     }
 
@@ -52,11 +62,53 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .franja-azul-compacta {
-        margin-top: 8px;
+        margin-top: 4px;
         flex-shrink: 0;
+        padding: 0.6rem 1rem;
     }
 
     .franja-azul-compacta .titulo-nombre-azul {
-        font-size: 1.1rem;
+        font-size: 1rem;
+    }
+
+    .footer-copyright-inicio {
+        text-align: center;
+        font-size: 0.75rem;
+        color: #666;
+        padding: 0.3rem 0;
+        letter-spacing: 1px;
+        flex-shrink: 0;
+    }
+
+    /* ADAPTACIÓN MÓVIL: Reducimos tamaños para que entre todo a la primera y se vea el splash bien */
+    @media (max-width: 768px) {
+        .contenedor-principal-inicio {
+            margin-top: 105px;
+            height: calc(100vh - 115px);
+            padding-bottom: 0.2rem;
+        }
+
+        .titulo-obra {
+            font-size: 1.6rem !important;
+            margin-left: 1rem !important;
+        }
+
+        .franja-obra {
+            border-bottom: 8px solid #faf9f5 !important;
+            padding: 0.2rem 0.5rem;
+        }
+
+        .franja-azul-compacta .titulo-nombre-azul {
+            font-size: 0.75rem;
+        }
+
+        .etiqueta-info-azul {
+            font-size: 0.7rem;
+        }
+
+        .footer-copyright-inicio {
+            font-size: 0.65rem;
+            padding: 0.1rem 0;
+        }
     }
 </style>
