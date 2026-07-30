@@ -1,0 +1,230 @@
+---
+import Marquesina from '../components/superior.astro';
+
+interface Props {
+    title?: string;
+    showSplash?: boolean;
+}
+
+const { title = "Leyre Serafina Gutiérrez Cruz", showSplash = false } = Astro.props;
+const añoActual = new Date().getFullYear();
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="ִֶָ𓂃 ࣪˖ ִֶָ🫑་༘࿐" />
+        <title>{title}</title>
+
+        <script is:inline>
+            if (sessionStorage.getItem('splashVisto') === 'true') {
+                document.documentElement.classList.add('sin-splash');
+            }
+        </script>
+
+        <style is:global>
+            .sin-splash #splash-screen {
+                display: none !important;
+            }
+
+          body {
+                background-color: #faf9f5; /* o blanco */
+                margin: 0;
+                font-family: 'AMANO', sans-serif;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                box-sizing: border-box;
+            }
+
+            html {
+                height: 100%;
+            }
+
+            #splash-screen {
+                position: fixed;
+                top: 0; left: 0; width: 100vw; height: 100vh;
+                background: white url('/image.png') no-repeat center center; 
+                background-size: cover;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 99999;
+                cursor: pointer;
+                transition: opacity 0.4s ease;
+                box-sizing: border-box;
+                padding: 2rem;
+            }
+
+            .splash-centro {
+                display: flex;
+                flex: 1;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            .splash-grupo {
+                display: flex;
+                align-items: center;
+                gap: 4rem;
+                text-decoration: none;
+                transition: opacity 0.2s ease;
+            }
+
+            .splash-grupo:hover {
+                opacity: 0.6;
+            }
+
+            .splash-nombre, .splash-bicho {
+                height: auto;
+                filter: drop-shadow(0px 0px 0.6px #000) drop-shadow(0px 0px 0.6px #000);
+                display: block;
+            }
+
+            .splash-nombre {
+                width: 380px; 
+            }
+
+            .splash-bicho {
+                width: 250px; 
+            }
+
+            #splash-screen img {
+                max-width: 100% !important;
+            }
+
+            @font-face {
+                font-family: 'AMANO'; 
+                src: url('/fonts/AlteHaasGroteskBold.ttf') format('opentype'); 
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+
+            .fade-out {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .logo-inicio-flotante {
+                position: fixed;
+                top: 32px;
+                left: 95%;
+                transform: translateX(-50%);
+                z-index: 999;
+                text-decoration: none;
+                transition: opacity 0.2s ease;
+            }
+
+            .logo-inicio-flotante:hover {
+                opacity: 0.6;
+            }
+
+            .logo-inicio-flotante img {
+                width: 120px; 
+                height: auto;
+                filter: drop-shadow(0px 0px 0.6px #000) drop-shadow(0px 0px 0.6px #000);
+            }
+
+            .franja-nombre-azul {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 2rem;
+                background-color: #458fff;
+                color: #ffffff;
+                text-decoration: none;
+                border-bottom: 3px solid #faf9f5;
+                transition: background-color 0.2s ease;
+            }   
+
+            .franja-nombre-azul:hover {
+                background-color: #74aeff;
+            }
+
+            .titulo-nombre-azul {
+                font-size: 1.4rem;
+                margin: 0;
+                letter-spacing: 1px;
+            }
+
+            main {
+                flex: 1;
+            }
+
+            .footer-contenedor {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 1rem 2rem;
+                background-color: transparent;
+                margin-top: auto; 
+                position: relative;
+                z-index: 9999;
+                font-size: 0.3rem;
+                color: #666;
+                letter-spacing: 1px;
+            }
+
+            .footer-copyright {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                font-size: 0.50rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        {showSplash && (
+            <div id="splash-screen">
+                <div></div>
+                <div class="splash-centro">
+                    <a href="/" class="splash-grupo" aria-label="Volver al inicio">
+                        <img src="/nombre.png" alt="Leyre Serafina Gutiérrez Cruz" class="splash-nombre" />
+                        <img src="/v2.svg" alt="Logo Bicho" class="splash-bicho" />
+                    </a>
+                </div>
+            </div>
+        )}
+
+        <Marquesina />
+
+        <a href="/" class="logo-inicio-flotante" aria-label="Volver al inicio">
+            <img src="/v2.svg" alt="Logo Inicio" />
+        </a>
+
+        <main>
+            <slot />
+        </main>
+
+        <div class="footer-contenedor">
+            <div class="footer-copyright">
+                © {añoActual}, LEYRE SERAFINA GUTIERREZ CRUZ
+            </div>
+        </div>
+
+        <script>
+            const splash = document.getElementById('splash-screen');
+            
+            if (splash) {
+                if (sessionStorage.getItem('splashVisto') === 'true') {
+                    splash.remove();
+                } else {
+                    splash.addEventListener('click', (e) => {
+                        splash.classList.add('fade-out');
+                        sessionStorage.setItem('splashVisto', 'true');
+                        setTimeout(() => splash.remove(), 400);
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>

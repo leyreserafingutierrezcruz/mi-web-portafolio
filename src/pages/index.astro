@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/maestra.astro';
 ---
 
 <Layout showSplash={true} title="Leyre Serafina Gutiérrez Cruz">
@@ -12,103 +12,89 @@ import Layout from '../layouts/Layout.astro';
             <a href="/obras/obra-4" class="franja-obra"><h3 class="titulo-obra">DONDE QUEDAN LOS ESPACIOS?</h3></a>
         </div>
         
-        <!-- Franja azul del CV compacta -->
+        <!-- Franja azul del CV -->
         <a href="/leyreserafina" class="franja-nombre-azul franja-azul-compacta">
             <h2 class="titulo-nombre-azul">LEYRE SERAFINA GUTIERREZ CRUZ</h2>
             <span class="etiqueta-info-azul">+ CV / BIO</span>
         </a>
-
-        <!-- Copyright específico y visible para la página principal sin scroll -->
-        <div class="footer-copyright-inicio">
-            © 2O26, LEYRE SERAFINA GUTIERREZ CRUZ
-        </div>
     </div>
 </Layout>
 
 <style>
-    /* Bloqueamos el scroll exclusivamente en la página principal */
-    :global(html), :global(body) {
+   :global(html), :global(body) {
         overflow: hidden !important;
         height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: transparent !important;
     }
 
-    /* Ocultamos el footer global de las otras páginas solo en este index para evitar duplicados */
-    :global(.footer-copyright) {
-        display: none;
+  :global(body) {
+        background-image: url('/public/piolin.jpg') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
     }
-
     .contenedor-principal-inicio {
-        margin-top: 120px;
-        height: calc(100vh - 130px);
+        /* Centramos verticalmente todo el bloque de obras y la barra azul */
+        height: calc(100vh - 120px);
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        align-items: stretch;
+        justify-content: center; /* Centra las barras en el medio de la pantalla */
+        gap: 12px;               /* Espacio equilibrado entre barra y barra */
         box-sizing: border-box;
-        padding-bottom: 0.5rem;
-        overflow: hidden;
+        padding: 0rem;
+        width: 100%;
     }
 
     .obras-grupo {
         display: flex;
         flex-direction: column;
-        flex: 1;
-        justify-content: space-between;
+        align-items: stretch;
+        justify-content: center;
+        gap: 14px;
+        width: 100%;
     }
 
     .franja-obra {
-        flex: 1;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        background-color: #ffe65d;
+        text-decoration: none;
+        box-sizing: border-box;
+        padding: 0.1rem 2rem; 
+        width: 100%;
+        transition: background-color 0.2s ease;
+    }
+
+    .franja-obra:hover {
+        background-color: #fff695;
+    }
+
+    .titulo-obra {
+        font-size: 3rem; 
+        font-weight: 900;
+        color: #d2384a;
+        text-transform: uppercase;
+        margin: 0;
+        letter-spacing: 1px;
+        line-height: 1;
     }
 
     .franja-azul-compacta {
-        margin-top: 4px;
-        flex-shrink: 0;
-        padding: 0.6rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 2rem; 
+        box-sizing: border-box;
+        width: 100%;
     }
 
     .franja-azul-compacta .titulo-nombre-azul {
-        font-size: 1rem;
-    }
-
-    .footer-copyright-inicio {
-        text-align: center;
-        font-size: 0.75rem;
-        color: #666;
-        padding: 0.3rem 0;
-        letter-spacing: 1px;
-        flex-shrink: 0;
-    }
-
-    /* ADAPTACIÓN MÓVIL: Reducimos tamaños para que entre todo a la primera y se vea el splash bien */
-    @media (max-width: 768px) {
-        .contenedor-principal-inicio {
-            margin-top: 105px;
-            height: calc(100vh - 115px);
-            padding-bottom: 0.2rem;
-        }
-
-        .titulo-obra {
-            font-size: 1.6rem !important;
-            margin-left: 1rem !important;
-        }
-
-        .franja-obra {
-            border-bottom: 8px solid #faf9f5 !important;
-            padding: 0.2rem 0.5rem;
-        }
-
-        .franja-azul-compacta .titulo-nombre-azul {
-            font-size: 0.75rem;
-        }
-
-        .etiqueta-info-azul {
-            font-size: 0.7rem;
-        }
-
-        .footer-copyright-inicio {
-            font-size: 0.65rem;
-            padding: 0.1rem 0;
-        }
+        font-size: 2rem;
+        margin: 0;
+        line-height: 1;
     }
 </style>
