@@ -1,18 +1,31 @@
 ---
 import Layout from '../layouts/maestra.astro';
+import Bolas from '../components/bolas.astro';
 ---
 
-<Layout showSplash={true} title="Leyre Serafina Gutiérrez Cruz">
+<Layout showSplash={true} showLogo={false} title="Leyre Serafina Gutiérrez Cruz">
+    <!-- Componente de las bolitas interactivas de fondo -->
+    <Bolas />
+
     <div class="contenedor-principal-inicio">
+        
+        <!-- Bloque ASCII con el texto oculto integrado -->
+        <pre class="arte-ascii">
+(')) ^v^ _             (`)_
+(__)_) ,--j j-------, (__)_)
+     /_.-.___.-.__/ \
+    ,8| [_],-.[_] | oOo
+,,,oO8|_o8_|_|_8o_|&888o,,,hjw~~~~~~~~~~~~~ bienvenidx<span class="texto-oculto"> a la web de leyre serafina</span></pre>
+
         <!-- Contenedor de las 4 obras amarillas -->
         <div class="obras-grupo">
             <a href="/obras/obra-1" class="franja-obra"><h3 class="titulo-obra">Y-URBE</h3></a>
             <a href="/obras/obra-2" class="franja-obra"><h3 class="titulo-obra">UNA RAMA +</h3></a>
             <a href="/obras/obra-3" class="franja-obra"><h3 class="titulo-obra">EXTRUIR LA DISTANCIA</h3></a>
-            <a href="/obras/obra-4" class="franja-obra"><h3 class="titulo-obra">DONDE QUEDAN LOS ESPACIOS?</h3></a>
+            <a href="/obras/obra-4" class="franja-obra"><h3 class="titulo-obra">DÓNDE QUEDAN LOS ESPACIOS?</h3></a>
         </div>
         
-        <!-- Franja azul del CV -->
+        <!-- Franja del CV de abajo -->
         <a href="/leyreserafina" class="franja-nombre-azul franja-azul-compacta">
             <h2 class="titulo-nombre-azul">LEYRE SERAFINA GUTIERREZ CRUZ</h2>
             <span class="etiqueta-info-azul">+ CV / BIO</span>
@@ -21,7 +34,7 @@ import Layout from '../layouts/maestra.astro';
 </Layout>
 
 <style>
-   :global(html), :global(body) {
+    :global(html), :global(body) {
         overflow: hidden !important;
         height: 100vh !important;
         margin: 0 !important;
@@ -29,20 +42,53 @@ import Layout from '../layouts/maestra.astro';
         background-color: transparent !important;
     }
 
-  :global(body) {
+    :global(body) {
         background-image: url('/public/piolin.jpg') !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
     }
+
+    /* Estilo para que el ASCII respete la fuente y los espacios */
+    .arte-ascii {
+        font-family: monospace;
+        line-height: 1;
+        white-space: pre;
+        margin: 0;
+        color: #0df7ff;
+        font-weight: 1200;
+        font-size: 1rem;
+        cursor: pointer; 
+        align-self: flex-start;  
+        margin-left: 35%;        
+    }
+
+    .arte-ascii:hover {
+        color: #445351; 
+    }
+
+    .arte-ascii .texto-oculto {
+        display: inline-block;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align: bottom;
+        transition: max-width 0.6s ease, opacity 0.4s ease;
+    }
+
+    .arte-ascii:hover .texto-oculto {
+        max-width: 350px; 
+        opacity: 1;
+    }
+
     .contenedor-principal-inicio {
-        /* Centramos verticalmente todo el bloque de obras y la barra azul */
         height: calc(100vh - 120px);
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        justify-content: center; /* Centra las barras en el medio de la pantalla */
-        gap: 12px;               /* Espacio equilibrado entre barra y barra */
+        justify-content: center;
+        gap: 10px;   
         box-sizing: border-box;
         padding: 0rem;
         width: 100%;
@@ -67,12 +113,15 @@ import Layout from '../layouts/maestra.astro';
         padding: 0.1rem 2rem; 
         width: 100%;
         transition: background-color 0.2s ease;
+        position: relative;
+        contain: layout paint;
     }
 
     .franja-obra:hover {
-        background-color: #fff695;
+        background-color: #ff9ecf;
     }
 
+    /* Título de las obras con su brillo */
     .titulo-obra {
         font-size: 3rem; 
         font-weight: 900;
@@ -81,6 +130,33 @@ import Layout from '../layouts/maestra.astro';
         margin: 0;
         letter-spacing: 1px;
         line-height: 1;
+        width: fit-content;
+
+        background: linear-gradient(90deg, #d2384a 0%, #d2384a 40%, #ffffff 50%, #ff007f 55%, #d2384a 60%, #d2384a 100%);
+        background-size: 250% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: background-position 0.5s ease-in-out, filter 0.5s ease;
+    }
+
+    .franja-obra:hover > .titulo-obra,
+    .franja-obra:hover .titulo-obra {
+        background-position: 0% 0;
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+
+    /* Franja del CV de abajo */
+    .franja-nombre-azul {
+        text-decoration: none;
+        background-color: #79f984; 
+        transition: background-color 0.2s ease;
+        position: relative;
+        contain: layout paint;
+    }
+
+    .franja-nombre-azul:hover {
+        background-color: #23a0ff; 
     }
 
     .franja-azul-compacta {
@@ -92,9 +168,30 @@ import Layout from '../layouts/maestra.astro';
         width: 100%;
     }
 
+    /* Título de abajo con su color rosa precioso y el brillo deslizante */
     .franja-azul-compacta .titulo-nombre-azul {
         font-size: 2rem;
+        font-weight: 900;
         margin: 0;
         line-height: 1;
+        width: fit-content;
+
+        background: linear-gradient(90deg, #ff79bc 0%, #ff79bc 40%, #ffffff 50%, #ffb3d9 55%, #ff79bc 60%, #ff79bc 100%);
+        background-size: 250% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: background-position 0.5s ease-in-out, filter 0.5s ease;
+    }
+
+    .franja-nombre-azul:hover > .titulo-nombre-azul,
+    .franja-nombre-azul:hover .titulo-nombre-azul {
+        background-position: 0% 0;
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+
+    .etiqueta-info-azul {
+        font-weight: 700;
+        color: #ff79bc;
     }
 </style>

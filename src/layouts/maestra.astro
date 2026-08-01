@@ -4,9 +4,10 @@ import Marquesina from '../components/superior.astro';
 interface Props {
     title?: string;
     showSplash?: boolean;
+    showLogo?: boolean;
 }
 
-const { title = "Leyre Serafina Gutiérrez Cruz", showSplash = false } = Astro.props;
+const { title = "Leyre Serafina Gutiérrez Cruz", showSplash = false, showLogo = true } = Astro.props;
 const añoActual = new Date().getFullYear();
 ---
 
@@ -30,20 +31,25 @@ const añoActual = new Date().getFullYear();
             }
 
           body {
-                background-color: #faf9f5; /* o blanco */
+                background-color: #faf9f5;
                 margin: 0;
                 font-family: 'AMANO', sans-serif;
                 display: flex;
                 flex-direction: column;
                 min-height: 100vh;
                 box-sizing: border-box;
+                cursor: url('/gifglitter.gif'), auto !important;
+            }
+
+            a, button, .splash-grupo, .logo-inicio-flotante {
+                cursor: url('/gifglitter.gif'), pointer !important;
             }
 
             html {
                 height: 100%;
             }
 
-            #splash-screen {
+           #splash-screen {
                 position: fixed;
                 top: 0; left: 0; width: 100vw; height: 100vh;
                 background: white url('/image.png') no-repeat center center; 
@@ -53,7 +59,7 @@ const añoActual = new Date().getFullYear();
                 justify-content: space-between;
                 align-items: center;
                 z-index: 99999;
-                cursor: pointer;
+                cursor: url('/gifglitter.gif'), pointer !important;
                 transition: opacity 0.4s ease;
                 box-sizing: border-box;
                 padding: 2rem;
@@ -125,9 +131,9 @@ const añoActual = new Date().getFullYear();
             }
 
             .logo-inicio-flotante img {
-                width: 120px; 
+                width: 105px; 
                 height: auto;
-                filter: drop-shadow(0px 0px 0.6px #000) drop-shadow(0px 0px 0.6px #000);
+                filter: drop-shadow(0px 0px 0.6px #00ffc3) drop-shadow(0px 0px 0.6px #000);
             }
 
             .franja-nombre-azul {
@@ -135,12 +141,11 @@ const añoActual = new Date().getFullYear();
                 align-items: center;
                 justify-content: space-between;
                 padding: 1rem 2rem;
-                background-color: #458fff;
-                color: #ffffff;
+                background-color: #45ffa2;
+                color: #ff6ab4;
                 text-decoration: none;
-                border-bottom: 3px solid #faf9f5;
                 transition: background-color 0.2s ease;
-            }   
+            } 
 
             .franja-nombre-azul:hover {
                 background-color: #74aeff;
@@ -197,9 +202,11 @@ const añoActual = new Date().getFullYear();
 
         <Marquesina />
 
-        <a href="/" class="logo-inicio-flotante" aria-label="Volver al inicio">
-            <img src="/v2.svg" alt="Logo Inicio" />
-        </a>
+        {showLogo && (
+            <a href="/" class="logo-inicio-flotante" aria-label="Volver al inicio">
+                <img src="/v2.svg" alt="Logo Inicio" />
+            </a>
+        )}
 
         <main>
             <slot />
