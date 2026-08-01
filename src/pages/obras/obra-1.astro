@@ -2,29 +2,21 @@
 import Layout from '../../layouts/maestra.astro';
 ---
 
-<Layout title="Y-URBE — Leyre Serafina Gutiérrez Cruz">
-    <div class="contenido-obra">
-        <!-- Columna izquierda: Título y texto conceptual descolocado -->
-        <div class="columna-izquierda">
-            <h1 class="titulo-obra-lateral">Y-URBE</h1>
-            
-            <div class="texto-conceptual">
-                <p class="parrafo-1">no quiero saber nada de lo que conlleva ocupar.</p>
-                <p class="parrafo-2">quiero reducir todo atisbo de construcción al mínimo posible.</p>
-                <p class="parrafo-3">así sea tratar de lidiar con las complejidades de la verticalidad, ahí veré como se tenga que hacer.</p>
-                <p class="parrafo-4">si no se explora está posibilidad puede que estemos desinteresadamente alejándonos de una tácita norma gravitatoria con los espacios que nos surgen arriba.</p>
-                <p class="parrafo-5">se empieza a considerar la posibilidad de entender el espacio desde un punto natural de vista, desde abajo hacia arriba.</p>
-                <p class="parrafo-6">se acaba de una vez con la casi obligatoria vista cenital de todo el espacio.</p>
-                <p class="parrafo-7">se deja al edificio arriba, y abajo al habitante, para que este deje de tomar una posición que nunca le fue amablemente dada, y cederla</p>
-                <p class="parrafo-8">que el edificio crezca hacia donde quiera en su eje Y, hacia arriba o abajo. que busque todas las formas, pero que en el plano ecotónico que le ofrece la superficie no trate de excederse, que le sea justo con lo que ocupa.</p>
+<Layout title="la otra altura del suelo — Leyre Serafina Gutiérrez Cruz">
+    <div class="pantalla-completa">
+        <div class="contenedor-imagenes">
+            <div class="contenedor-efecto img-izquierda">
+                <img src="/edit_city2.png" alt="izquierda" class="img-obra img-izquierda-style" />
+                <div class="destello-espejo mask-izq"></div>
             </div>
-        </div>
-        
-        <!-- Contenedor del Stop-Motion -->
-        <div class="contenedor-stopmotion" id="contenedor-animacion">
-            <img src="/urbe_1.png" alt="Y-URBE fotograma 1" class="fotograma activo" />
-            <img src="/urbe_2.png" alt="Y-URBE fotograma 2" class="fotograma" />
-            <img src="/urbe_3.png" alt="Y-URBE fotograma 3" class="fotograma fotograma-3" />
+            <div class="contenedor-efecto img-centro">
+                <img src="/edit_city.png" alt="centro" class="img-obra img-centro-style" />
+                <div class="destello-espejo mask-cen flip-horizontal"></div>
+            </div>
+            <div class="contenedor-efecto img-derecha">
+                <img src="/edit_city.png" alt="derecha" class="img-obra img-derecha-style" />
+                <div class="destello-espejo mask-der"></div>
+            </div>
         </div>
     </div>
 </Layout>
@@ -33,198 +25,173 @@ import Layout from '../../layouts/maestra.astro';
     :global(html), :global(body) {
         overflow: hidden !important;
         height: 100vh !important;
-        background-color: #faf9f5 !important;
+        width: 100vw !important;
         margin: 0;
     }
 
-    .contenido-obra {
-        margin-top: 0;
-        padding: 0 4rem;
-        display: grid;
-        grid-template-columns: 460px 1fr;
-        align-items: center;
-        box-sizing: border-box;
-        /* Usamos calc para restar espacio y dejar que el footer de maestra.astro encaje a la perfección */
-        height: calc(100vh - 50px);
+    :global(body) {
+        background-image: 
+            linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), 
+            url('/metal.jpg') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .pantalla-completa {
+        position: relative;
         width: 100vw;
-        position: relative;
-    }
-
-    .columna-izquierda {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        max-height: 78vh;
-        overflow-y: auto;
-        padding-right: 1.5rem;
-        z-index: 2;
-    }
-
-    .columna-izquierda::-webkit-scrollbar {
-        width: 2px;
-    }
-    .columna-izquierda::-webkit-scrollbar-thumb {
-        background-color: #d2384a;
-    }
-
-    .titulo-obra-lateral {
-        font-size: 2.2rem;
-        color: #d2384a;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin: 0;
-    }
-
-    .texto-conceptual {
-        font-size: 0.72rem;
-        line-height: 1.45;
-        color: #555;
-        font-family: monospace;
-    }
-
-    .texto-conceptual p {
-        margin: 0 0 1rem 0;
-    }
-
-    .parrafo-1 { transform: translateX(0px); width: 95%; }
-    .parrafo-2 { transform: translateX(25px); width: 90%; }
-    .parrafo-3 { transform: translateX(10px); width: 92%; }
-    .parrafo-4 { transform: translateX(45px); width: 88%; }
-    .parrafo-5 { transform: translateX(20px); width: 94%; }
-    .parrafo-6 { transform: translateX(60px); width: 85%; }
-    .parrafo-7 { transform: translateX(15px); width: 93%; }
-    .parrafo-8 { transform: translateX(35px); width: 90%; }
-
-  .contenedor-stopmotion {
-        width: 100%;
-        max-width: 1000px;
-        height: 620px; 
-        position: relative;
+        height: calc(100vh - 120px);
         display: flex;
         justify-content: center;
         align-items: center;
-        justify-self: center;
-        cursor: pointer;
-        margin-left: 21rem; 
-        margin-top: 3rem;     /* ¡Esto empuja la imagen hacia abajo para que no choque arriba! */
-        margin-bottom: -3rem; /* Esto hace que se desborde sobre el footer abajo */
-        z-index: 5; 
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        top: 90px; 
     }
 
-    .fotograma {
+    .contenedor-imagenes {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 100vw; 
+        margin-left: -20vw; 
+        gap: 1vw; 
+    }
+
+    .contenedor-efecto {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .img-obra {
+        width: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    /* El destello vertical dentro de la figura */
+    .destello-espejo {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        object-position: center center;
+        pointer-events: none;
         opacity: 0;
-        transition: opacity 0.1s ease-in-out;
-        pointer-events: none; 
+        z-index: 10;
+        
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(255, 0, 90, 0.2) 30%,
+            rgba(255, 230, 0, 0.6) 45%,
+            rgba(255, 255, 255, 0.95) 50%,
+            rgba(0, 230, 255, 0.6) 55%,
+            rgba(150, 0, 255, 0.4) 70%,
+            transparent 100%
+        );
+        
+        background-size: 100% 300%;
+        background-position: center -100%;
+        
+        mix-blend-mode: color-dodge;
+        
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
     }
 
-    .fotograma-3 {
-        transform: scale(0.95);
+    /* Incontestable: espejo horizontal para que coincida exactamente con el scaleX(-1) de la imagen central */
+    .flip-horizontal {
+        transform: scaleX(-1);
     }
 
-    .fotograma.activo {
-        opacity: 1;
+    /* Máscaras individuales */
+    .mask-izq {
+        -webkit-mask-image: url('/edit_city2.png');
+        mask-image: url('/edit_city2.png');
+    }
+    .mask-cen, .mask-der {
+        -webkit-mask-image: url('/edit_city.png');
+        mask-image: url('/edit_city.png');
+    }
+
+    /* Animación vertical de arriba hacia abajo respetando la inversión si la tiene */
+    @keyframes barridoVertical {
+        0% {
+            background-position: center -150%;
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        80% {
+            opacity: 1;
+        }
+        100% {
+            background-position: center 250%;
+            opacity: 0;
+        }
+    }
+
+    .contenedor-efecto:hover .destello-espejo {
+        animation: barridoVertical 1.2s ease-in-out forwards;
+    }
+
+    /* Tamaños y estilos de las imágenes */
+    .img-derecha {
+        max-height: 92vh; 
+        transform: translateY(3px); 
+        z-index: 1;
+    }
+    .img-derecha-style {
+        max-height: 92vh;
+    }
+
+    .img-centro {
+        max-height: 82vh; 
+        z-index: 2;
+    }
+    .img-centro-style {
+        max-height: 82vh;
+        transform: scaleX(-1) translateY(0px); 
+        filter: grayscale(100%) brightness(1.05); 
+    }
+
+    .img-izquierda {
+        max-height: 78vh; 
+        z-index: 3;
+    }
+    .img-izquierda-style {
+        max-height: 78vh;
+        transform: translateY(0px); 
+        filter: grayscale(100%) brightness(1.15); 
     }
 
     @media (max-width: 768px) {
-        .contenido-obra {
-            display: flex;
+        .pantalla-completa {
+            height: calc(100vh - 100px);
+            padding: 1rem;
+            overflow-y: auto;
+            top: 0;
+        }
+        .contenedor-imagenes {
             flex-direction: column;
-            justify-content: center;
-            padding: 0 1.5rem;
-            height: 100vh;
-        }
-        .columna-izquierda {
-            max-height: 25vh;
-            padding-right: 0;
-        }
-        .titulo-obra-lateral {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-        .texto-conceptual p {
-            transform: none !important;
-            width: 100% !important;
-        }
-        .contenedor-stopmotion {
-            width: 90vw;
-            height: 50vh;
+            gap: 1rem;
+            height: auto;
             margin-left: 0;
+        }
+        .contenedor-efecto {
+            max-height: 35vh !important;
+            transform: none !important;
         }
     }
 </style>
-
-<script>
-    function initStopmotion() {
-        const fotogramas = document.querySelectorAll('.fotograma');
-        const contenedor = document.getElementById('contenedor-animacion');
-        
-        if (fotogramas.length > 0 && contenedor) {
-            let indiceActual = 0;
-            let intervalo: number | null = null;
-            let timeoutReinicio: number | null = null;
-
-            const iniciarAnimacion = () => {
-                if (intervalo !== null) return;
-                intervalo = window.setInterval(() => {
-                    fotogramas[indiceActual].classList.remove('activo');
-                    indiceActual = (indiceActual + 1) % fotogramas.length;
-                    fotogramas[indiceActual].classList.add('activo');
-                }, 500);
-            };
-
-            const detenerAnimacion = () => {
-                if (timeoutReinicio !== null) {
-                    clearTimeout(timeoutReinicio);
-                    timeoutReinicio = null;
-                }
-                if (intervalo !== null) {
-                    clearInterval(intervalo);
-                    intervalo = null;
-                }
-            };
-
-            const programarReinicio = () => {
-                timeoutReinicio = window.setTimeout(() => {
-                    iniciarAnimacion();
-                }, 100);
-            };
-
-            const comprobarPosicionRatones = (e: MouseEvent) => {
-                const rect = contenedor.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const margenX = rect.width * 0.25;  
-                const margenY = rect.height * 0.25; 
-
-                if (
-                    x >= margenX && x <= (rect.width - margenX) &&
-                    y >= margenY && y <= (rect.height - margenY)
-                ) {
-                    detenerAnimacion();
-                } else {
-                    programarReinicio();
-                }
-            };
-
-            contenedor.removeEventListener('mousemove', comprobarPosicionRatones);
-            contenedor.removeEventListener('mouseleave', programarReinicio);
-
-            contenedor.addEventListener('mousemove', comprobarPosicionRatones);
-            contenedor.addEventListener('mouseleave', programarReinicio);
-
-            iniciarAnimacion();
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', initStopmotion);
-    document.addEventListener('astro:page-load', initStopmotion);
-</script>
