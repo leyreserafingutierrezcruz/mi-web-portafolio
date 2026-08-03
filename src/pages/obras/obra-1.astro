@@ -6,15 +6,15 @@ import Layout from '../../layouts/maestra.astro';
     <div class="pantalla-completa">
         <div class="contenedor-imagenes">
             <div class="contenedor-efecto img-izquierda">
-                <img src="/edit_city2.png" alt="izquierda" class="img-obra img-izquierda-style" />
+                <img src="/edit_city2.avif" alt="izquierda" class="img-obra img-izquierda-style" />
                 <div class="destello-espejo mask-izq"></div>
             </div>
             <div class="contenedor-efecto img-centro">
-                <img src="/edit_city.png" alt="centro" class="img-obra img-centro-style" />
+                <img src="/edit_city.avif" alt="centro" class="img-obra img-centro-style" />
                 <div class="destello-espejo mask-cen flip-horizontal"></div>
             </div>
             <div class="contenedor-efecto img-derecha">
-                <img src="/edit_city.png" alt="derecha" class="img-obra img-derecha-style" />
+                <img src="/edit_city.avif" alt="derecha" class="img-obra img-derecha-style" />
                 <div class="destello-espejo mask-der"></div>
             </div>
         </div>
@@ -32,7 +32,7 @@ import Layout from '../../layouts/maestra.astro';
     :global(body) {
         background-image: 
             linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), 
-            url('/metal.jpg') !important;
+            url('/metal.avif') !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
@@ -116,12 +116,12 @@ import Layout from '../../layouts/maestra.astro';
 
     /* Máscaras individuales */
     .mask-izq {
-        -webkit-mask-image: url('/edit_city2.png');
-        mask-image: url('/edit_city2.png');
+        -webkit-mask-image: url('/edit_city2.avif');
+        mask-image: url('/edit_city2.avif');
     }
     .mask-cen, .mask-der {
-        -webkit-mask-image: url('/edit_city.png');
-        mask-image: url('/edit_city.png');
+        -webkit-mask-image: url('/edit_city.avif');
+        mask-image: url('/edit_city.avif');
     }
 
     /* Animación vertical de arriba hacia abajo respetando la inversión si la tiene */
@@ -148,30 +148,30 @@ import Layout from '../../layouts/maestra.astro';
 
     /* Tamaños y estilos de las imágenes */
     .img-derecha {
-        max-height: 92vh; 
+        max-height: 82vh; 
         transform: translateY(3px); 
         z-index: 1;
     }
     .img-derecha-style {
-        max-height: 92vh;
+        max-height: 82vh;
     }
 
     .img-centro {
-        max-height: 82vh; 
+        max-height: 72vh; 
         z-index: 2;
     }
     .img-centro-style {
-        max-height: 82vh;
+        max-height: 72vh;
         transform: scaleX(-1) translateY(0px); 
         filter: grayscale(100%) brightness(1.05); 
     }
 
     .img-izquierda {
-        max-height: 78vh; 
+        max-height: 68vh; 
         z-index: 3;
     }
     .img-izquierda-style {
-        max-height: 78vh;
+        max-height: 68vh;
         transform: translateY(0px); 
         filter: grayscale(100%) brightness(1.15); 
     }
