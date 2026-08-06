@@ -4,41 +4,39 @@ import Layout from '../../layouts/maestra.astro';
 
 <Layout title="EXTRUIR LA DISTANCIA — Leyre Serafina Gutiérrez Cruz">
     <div class="contenido-obra">
-        <h1 class="titulo-obra-interna">EXTRUIR LA DISTANCIA</h1>
-        
-        <div class="galeria">
-            <img src="/obras/obra3-foto1.jpg" alt="Extruir la distancia" />
+        <div class="galeria-pantalla-completa">
+            <img src="/prueba.jpg" alt="Extruir la distancia - Serie Poliuretano" />
         </div>
     </div>
 </Layout>
 
 <style>
+    :global(html, body) {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
     .contenido-obra {
-        margin-top: 150px;
-        padding: 0 3rem 4rem 3rem;
-        max-width: 1000px;
-        margin-left: auto;
-        margin-right: auto;
+        margin-top: 130px;
+        padding-bottom: 4rem;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .galeria-pantalla-completa {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 3rem;
         box-sizing: border-box;
     }
 
-    .titulo-obra-interna {
-        font-size: 2.5rem;
-        color: #d2384a;
-        text-transform: uppercase;
-        margin-bottom: 2rem;
-        letter-spacing: 1px;
-    }
-
-    .galeria {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .galeria img {
-        max-width: 100%;
+    .galeria-pantalla-completa img {
+        width: 100%;
         height: auto;
+        display: block;
         border-radius: 4px;
     }
 </style>
