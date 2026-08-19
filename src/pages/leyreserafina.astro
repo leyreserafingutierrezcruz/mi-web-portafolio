@@ -7,7 +7,6 @@ import Layout from '../layouts/maestra.astro';
     <!-- Contenedor donde aparecerán las estelas del ratón -->
     <div class="rastros-container" id="rastros-container"></div>
 
-
 </Layout>
 
 <script>
@@ -28,7 +27,7 @@ import Layout from '../layouts/maestra.astro';
                 setTimeout(() => {
                     rastro.remove();
                 }, 300);
-            },1000);
+            }, 1000);
         });
     }
 </script>
@@ -58,7 +57,8 @@ import Layout from '../layouts/maestra.astro';
         height: 120px;
         transform: translate(-50%, -50%);
         pointer-events: none;
-        border-radius: 50%;
+        /* Cambiado a 0 (o eliminado) para que sea un cuadrado perfecto */
+        border-radius: 0; 
         background: radial-gradient(
             circle,
             rgba(255, 0, 217, 0.4),

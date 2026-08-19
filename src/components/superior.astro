@@ -1,38 +1,79 @@
-<!-- src/components/Marquesina.astro -->
-<div class="marquesina-superior">
-    <div class="marquesina-track">
-        <span> uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu</span>
+---
+// src/components/Marquesina.astro
+---
+
+<div class="sub-superior">
+    <div class="sub-track" id="superiorSub">
+        <span class="texto-base">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⡴⢲⡄⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢀⡞⠀⠀⡇⠀⢀⡴⠋⠁⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣸⠁⠀⠀⡇⣠⠟⠀⠀⠀⣼⣠⣤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣿⠀⢠⢤⡿⠃⣀⠀⢀⡞⠉⠁⠀⠀⠈⠙⠶⡄⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣻⣰⡏⣼⢁⡴⠋⣰⠋⠀⠀⠀⠀⠀⠀⠀⠀⠹⡄⣀⡀⠀⠀⠀⠀
+⠀⠀⠀⢀⡾⠋⠉⠁⠀⠙⠁⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡈⢷⠀⠀⠀⠀
+⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⢀⣧⡾⠁⠀⠀⠀
+⠀⠀⠀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⣾⠃⠀⠀⠀⠀⠀
+⠀⠀⠀⣹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠁⠀⠀⡀⠀⠀⢰⡾⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢻⡇⣀⡀⠀⠺⣿⠇⠀⣀⣤⣄⣀⣠⣬⣥⣤⠾⠛⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠉⠛⠓⠂⠤⠤⠖⠊⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀&nbsp;&nbsp;&nbsp;&nbsp;</span>
     </div>
 </div>
 
+<script>
+    const track = document.getElementById('superiorSub');
+    const spanOriginal = track?.querySelector('.texto-base') as HTMLElement;
+
+    if (track && spanOriginal) {
+        const anchoPantalla = window.innerWidth;
+        const anchoSpan = spanOriginal.offsetWidth;
+        const vecesADuplicar = Math.ceil((anchoPantalla * 3) / anchoSpan);
+
+        for (let i = 0; i < vecesADuplicar; i++) {
+            const clone = spanOriginal.cloneNode(true);
+            track.appendChild(clone);
+        }
+    }
+</script>
+
 <style>
-    .marquesina-superior {
+    .sub-superior {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 24px;
-        background-color: #282828; /* Asegúrate de que este sea el rojo exacto que usas */
+        background-color: #10ff9c;
         overflow: hidden;
         z-index: 9999;
+        cursor: url('/gifglitter.gif'), pointer !important;
     }
     
-    .marquesina-track {
+    .sub-track {
         display: flex;
+        width: max-content;
         white-space: nowrap;
-        animation: moverMarquesina 20s linear infinite;
+        animation: moverSub 60s linear infinite;
+        will-change: transform;
     }
 
-    .marquesina-track span {
+    .sub-superior:hover .sub-track {
+        animation-play-state: paused !important;
+    }
+
+    .sub-track span {
         font-family: inherit;
         font-size: 12px;
         color: #ffffff;
         line-height: 24px;
-        padding-right: 50px;
+        display: inline-block;
     }
 
-    @keyframes moverMarquesina {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+    @keyframes moverSub {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
     }
 </style>

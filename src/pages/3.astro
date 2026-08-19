@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/maestra.astro';
+---
+
+<Layout title="EXTRUIR LA DISTANCIA — Leyre Serafina Gutiérrez Cruz">
+
+    <div class="scroll-container">
+    
+        <section class="panel" id="escena1">
+            <div class="fondo-carpet"></div>
+
+            <div class="fila-inicial" id="filaImagenes">
+                <img src="/IMG_5882.JPG" alt="IMG 5882" class="imagen-base imagen-izq" />
+                <img src="/IMG_5884.JPG" alt="IMG 5884" class="imagen-base imagen-der" />
+            </div>
+  
+            <div class="bloque-conjunto" id="contenedorConjunto">
+                <img src="/IMG_5868.JPG" alt="IMG 5868" class="imagen-principal" />
+                <img src="/sombra_5868.JPG" alt="sombra 5868" class="imagen-sombra" />
+            </div>
+
+            <img src="/IMG_5889.JPG" alt="IMG 5889" class="imagen-esquina-izq" id="imagenHoverIzq" />
+        </section>
+
+        <section class="panel" id="escena2">
+            <div class="contenedor-imagenes-finales" id="contenedorFinales">
+                <div class="grupo-imagenes-finales">
+                  <!-- <img src="/IMG_5876.JPG" alt="IMG 5876" class="imagen-fija-final img-final-1" /> -->
+                    <img src="/IMG_5885.JPG" alt="IMG 5885" class="imagen-fija-final img-final-2" />
+                </div>
+            </div>
+        </section>
+
+    </div>
+</Layout>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl1 = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#escena1",
+            start: "top top",
+            end: "+=1400", 
+            pin: true,
+            scrub: true
+        }
+    });
+
+    tl1.to(".imagen-izq", { x: "-75vw", duration: 1, ease: "steps(18)" })
+       .to(".imagen-der", { x: "75vw", duration: 1, ease: "steps(18)" }, "<")
+
+       .fromTo(".fondo-carpet", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" },"-=0.3")
+       .fromTo("#contenedorConjunto", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "steps(1)" }, "<")
+       .fromTo("#imagenHoverIzq", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "steps(1)" }, "<");
+
+    const tl2 = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#escena2",
+            start: "top top",
+            end: "+=800",
+            pin: true,
+            scrub: true
+        }
+    });
+
+    tl2.fromTo("#contenedorFinales", 
+        { opacity: 0 }, 
+        { opacity: 1, duration: 0.5, ease: "steps(4)" }
+    );
+
+    let isScrolling = false;
+    
+    window.addEventListener("wheel", (e) => {
+        if (isScrolling) return;
+        
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        
+        if (scrollY < windowHeight * 3) {
+            e.preventDefault(); 
+            isScrolling = true;
+
+            const jumpSize = 80; 
+            const direction = e.deltaY > 0 ? 1 : -1;
+
+            window.scrollBy({
+                top: direction * jumpSize,
+                behavior: "auto"
+            });
+
+            setTimeout(() => {
+                isScrolling = false;
+            }, 120); 
+        }
+    }, { passive: false });
+</script>
+<style>
+    :global(html, body) { 
+        margin: 0; 
+        padding: 0; 
+        width: 100vw; 
+        overflow-x: hidden; 
+        background-color: #ffffffef; 
+    }
+
+    .scroll-container { 
+        width: 100%; 
+    }
+
+    .panel { 
+        height: 100vh; 
+        width: 100vw; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        position: relative; 
+        overflow: hidden; 
+    }
+
+    .fondo-carpet {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('/carpet.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        z-index: 1; 
+    }
+    
+    .fila-inicial { 
+        display: flex; 
+        align-items: center; 
+        gap: 30px; 
+        position: absolute; 
+        z-index: 2;
+    }
+
+    .imagen-base { 
+        height: 350px; 
+        width: auto; 
+        object-fit: contain; 
+    }
+
+    .bloque-conjunto {
+        position: absolute;
+        top: 15vh;
+        right: 5vw; 
+        display: flex;
+        align-items: flex-end; 
+        gap: 0; 
+        opacity: 0;
+        z-index: 3;
+        cursor: pointer;
+        transform-origin: top right;
+        transition: transform 0.3s steps(4, end); 
+    }
+
+    .bloque-conjunto:hover {
+        transform: scale(2.15);
+    }
+
+    .imagen-principal { 
+        height: 200px; 
+        width: auto; 
+        object-fit: contain; 
+    }
+
+    .imagen-sombra { 
+        height: 138px; 
+        width: auto; 
+        object-fit: contain; 
+        margin-bottom: -20.6px; 
+        margin-left: 0px; 
+    }
+
+    .imagen-esquina-izq {
+        position: absolute;
+        bottom: 8vh;
+        left: 6vw;
+        height: 22vh;
+        width: auto;
+        object-fit: contain;
+        opacity: 0;
+        z-index: 10;
+        cursor: pointer;
+        transform-origin: bottom left;
+        transition: transform 0.3s steps(4, end);
+    }
+
+    .imagen-esquina-izq:hover {
+        transform: scale(2.15);
+    }
+
+    .contenedor-imagenes-finales {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        z-index: 2;
+    }
+
+    .grupo-imagenes-finales {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 60px;
+        transform: rotate(-18deg) translateX(0px) translateY(0px) scale(1.1); 
+    }
+
+    .imagen-fija-final {
+        height: 45vh;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .img-final-1 {
+        transform: rotate(-50deg) translateX(70px) translateY(50px); 
+    }
+
+    .img-final-2 {
+        transform: rotate(18deg) translateX(-22px) translateY(98px) scale(1.11); 
+    }
+</style>
