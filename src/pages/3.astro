@@ -9,24 +9,28 @@ import Layout from '../layouts/maestra.astro';
         <section class="panel" id="escena1">
             <div class="fondo-carpet"></div>
 
+            <div class="contenedor-fondo-negro" id="zonaNegra">
+                <div class="fondo-negro-zona"></div>
+            </div>
+
             <div class="fila-inicial" id="filaImagenes">
                 <img src="/IMG_5882.JPG" alt="IMG 5882" class="imagen-base imagen-izq" />
                 <img src="/IMG_5884.JPG" alt="IMG 5884" class="imagen-base imagen-der" />
             </div>
-  
+ 
             <div class="bloque-conjunto" id="contenedorConjunto">
+                <img src="/IMG_5876.JPG" alt="IMG 5876 revelada" class="imagen-revelada" />
                 <img src="/IMG_5868.JPG" alt="IMG 5868" class="imagen-principal" />
                 <img src="/sombra_5868.JPG" alt="sombra 5868" class="imagen-sombra" />
             </div>
-
-            <img src="/IMG_5889.JPG" alt="IMG 5889" class="imagen-esquina-izq" id="imagenHoverIzq" />
         </section>
 
         <section class="panel" id="escena2">
             <div class="contenedor-imagenes-finales" id="contenedorFinales">
                 <div class="grupo-imagenes-finales">
-                  <!-- <img src="/IMG_5876.JPG" alt="IMG 5876" class="imagen-fija-final img-final-1" /> -->
-                    <img src="/IMG_5885.JPG" alt="IMG 5885" class="imagen-fija-final img-final-2" />
+                    <img src="/IMG_5909.JPG" alt="IMG 5909" class="imagen-fija-final img-final-1" /> 
+                    <img src="/IMG_5907.JPG" alt="IMG 5907" class="imagen-fija-final img-final-2" />
+                    <img src="/IMG_5885.JPG" alt="IMG 5885" class="imagen-fija-final img-final-3" />
                 </div>
             </div>
         </section>
@@ -38,6 +42,24 @@ import Layout from '../layouts/maestra.astro';
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     gsap.registerPlugin(ScrollTrigger);
+
+   ScrollTrigger.create({
+        trigger: "#escena1",
+        start: "top top",
+        end: "bottom top",
+        onEnter: () => {
+            document.querySelector(".logo-inicio-flotante")?.classList.add("logo-blanco");
+        },
+        onLeave: () => {
+            document.querySelector(".logo-inicio-flotante")?.classList.remove("logo-blanco");
+        },
+        onEnterBack: () => {
+            document.querySelector(".logo-inicio-flotante")?.classList.add("logo-blanco");
+        },
+        onLeaveBack: () => {
+            document.querySelector(".logo-inicio-flotante")?.classList.remove("logo-blanco");
+        }
+    });
 
     const tl1 = gsap.timeline({
         scrollTrigger: {
@@ -51,16 +73,16 @@ import Layout from '../layouts/maestra.astro';
 
     tl1.to(".imagen-izq", { x: "-75vw", duration: 1, ease: "steps(18)" })
        .to(".imagen-der", { x: "75vw", duration: 1, ease: "steps(18)" }, "<")
-
-       .fromTo(".fondo-carpet", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" },"-=0.3")
-       .fromTo("#contenedorConjunto", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "steps(1)" }, "<")
-       .fromTo("#imagenHoverIzq", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "steps(1)" }, "<");
+       .to("#zonaNegra", { opacity: 0, duration: 1.2, ease: "steps(14)" }, "<")
+       .fromTo(".fondo-carpet", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" }, "-=0.3")
+       .fromTo("#contenedorConjunto", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" }, "-=0.3");
+       tl1.to({}, { duration: 1.2 });
 
     const tl2 = gsap.timeline({
         scrollTrigger: {
             trigger: "#escena2",
             start: "top top",
-            end: "+=800",
+            end: "+=200",
             pin: true,
             scrub: true
         }
@@ -97,6 +119,7 @@ import Layout from '../layouts/maestra.astro';
         }
     }, { passive: false });
 </script>
+
 <style>
     :global(html, body) { 
         margin: 0; 
@@ -120,6 +143,33 @@ import Layout from '../layouts/maestra.astro';
         overflow: hidden; 
     }
 
+    #escena2 {
+        background-color: #ffffff;
+    }
+
+    .contenedor-fondo-negro {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 2050px; 
+        height: 1520px; 
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .fondo-negro-zona {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/black.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     .fondo-carpet {
         position: absolute;
         top: 0;
@@ -137,39 +187,52 @@ import Layout from '../layouts/maestra.astro';
     .fila-inicial { 
         display: flex; 
         align-items: center; 
-        gap: 30px; 
+        gap: 20px; 
         position: absolute; 
-        z-index: 2;
+        z-index: 3; 
+        left: 49.5%; 
+        transform: translateX(-50%);
     }
 
     .imagen-base { 
-        height: 350px; 
+        height: 300px; 
         width: auto; 
         object-fit: contain; 
     }
 
     .bloque-conjunto {
         position: absolute;
-        top: 15vh;
-        right: 5vw; 
+        top: 35vh;
+        right: 1vw; 
         display: flex;
         align-items: flex-end; 
         gap: 0; 
         opacity: 0;
-        z-index: 3;
+        z-index: 4;
         cursor: pointer;
         transform-origin: top right;
-        transition: transform 0.3s steps(4, end); 
+        transform: scale(1.7);
     }
 
-    .bloque-conjunto:hover {
-        transform: scale(2.15);
+    .imagen-revelada {
+        position: absolute;
+        left: 20px; 
+        bottom: -21px;
+        height: 280px;
+        width: auto;
+        object-fit: contain;
+        opacity: 0;
+        z-index: 1;
+        transition: opacity 0.3s steps(4, end);
     }
 
     .imagen-principal { 
         height: 200px; 
         width: auto; 
         object-fit: contain; 
+        position: relative;
+        z-index: 3;
+        transition: transform 0.3s steps(4, end);
     }
 
     .imagen-sombra { 
@@ -178,24 +241,21 @@ import Layout from '../layouts/maestra.astro';
         object-fit: contain; 
         margin-bottom: -20.6px; 
         margin-left: 0px; 
+        position: relative;
+        z-index: 2;
+        transition: opacity 0.3s steps(4, end);
     }
 
-    .imagen-esquina-izq {
-        position: absolute;
-        bottom: 8vh;
-        left: 6vw;
-        height: 22vh;
-        width: auto;
-        object-fit: contain;
-        opacity: 0;
-        z-index: 10;
-        cursor: pointer;
-        transform-origin: bottom left;
-        transition: transform 0.3s steps(4, end);
+    .bloque-conjunto:hover .imagen-principal {
+        transform: translateX(-400px) translateY(-20px) scale(1.4); 
     }
 
-    .imagen-esquina-izq:hover {
-        transform: scale(2.15);
+    .bloque-conjunto:hover .imagen-sombra {
+        opacity: 0; 
+    }
+
+    .bloque-conjunto:hover .imagen-revelada {
+        opacity: 1; 
     }
 
     .contenedor-imagenes-finales {
@@ -210,21 +270,39 @@ import Layout from '../layouts/maestra.astro';
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 60px;
-        transform: rotate(-18deg) translateX(0px) translateY(0px) scale(1.1); 
+        gap: 40px;
+        transform: rotate(0deg) scale(1); 
     }
 
     .imagen-fija-final {
-        height: 45vh;
+        height: 40vh;
         width: auto;
         object-fit: contain;
     }
 
     .img-final-1 {
-        transform: rotate(-50deg) translateX(70px) translateY(50px); 
+        height: 40vh;                          /* Cambia la altura/escala base */
+        transform: rotate(0deg)              /* Grados de rotación */
+                   translateX(-200px)             /* Desplazamiento horizontal (izquierda/derecha) */
+                   translateY(0px)             /* Desplazamiento vertical (arriba/abajo) */
+                   scale(1.4);                   /* Escala adicional específica para esta imagen */
     }
 
+    /* --- IMAGEN 2 (IMG_5907.JPG) --- */
     .img-final-2 {
-        transform: rotate(18deg) translateX(-22px) translateY(98px) scale(1.11); 
+        height: 40vh;                          /* Cambia la altura/escala base */
+        transform: rotate(0deg)                /* Grados de rotación */
+                   translateX(-122px)             /* Desplazamiento horizontal */
+                   translateY(0px)             /* Desplazamiento vertical */
+                   scale(2.2);                   /* Escala adicional específica para esta imagen */
+    }
+
+    /* --- IMAGEN 3 (IMG_5885.JPG) --- */
+    .img-final-3 {
+        height: 40vh;                          /* Cambia la altura/escala base */
+        transform: rotate(0deg)               /* Grados de rotación */
+                   translateX(-35px)             /* Desplazamiento horizontal */
+                   translateY(0px)             /* Desplazamiento vertical */
+                   scale(1.5);                   /* Escala adicional específica para esta imagen */
     }
 </style>
