@@ -3,9 +3,9 @@ import Layout from '../layouts/maestra.astro';
 ---
 
 <Layout title="EXTRUIR LA DISTANCIA — Leyre Serafina Gutiérrez Cruz">
+    <div class="media-luna-fondo"></div>
 
     <div class="scroll-container">
-    
         <section class="panel" id="escena1">
             <div class="fondo-carpet"></div>
 
@@ -34,7 +34,6 @@ import Layout from '../layouts/maestra.astro';
                 </div>
             </div>
         </section>
-
     </div>
 </Layout>
 
@@ -42,24 +41,6 @@ import Layout from '../layouts/maestra.astro';
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     gsap.registerPlugin(ScrollTrigger);
-
-   ScrollTrigger.create({
-        trigger: "#escena1",
-        start: "top top",
-        end: "bottom top",
-        onEnter: () => {
-            document.querySelector(".logo-inicio-flotante")?.classList.add("logo-blanco");
-        },
-        onLeave: () => {
-            document.querySelector(".logo-inicio-flotante")?.classList.remove("logo-blanco");
-        },
-        onEnterBack: () => {
-            document.querySelector(".logo-inicio-flotante")?.classList.add("logo-blanco");
-        },
-        onLeaveBack: () => {
-            document.querySelector(".logo-inicio-flotante")?.classList.remove("logo-blanco");
-        }
-    });
 
     const tl1 = gsap.timeline({
         scrollTrigger: {
@@ -73,10 +54,12 @@ import Layout from '../layouts/maestra.astro';
 
     tl1.to(".imagen-izq", { x: "-75vw", duration: 1, ease: "steps(18)" })
        .to(".imagen-der", { x: "75vw", duration: 1, ease: "steps(18)" }, "<")
+       .to(".fondo-negro-zona", { opacity: 0, duration: 1, ease: "steps(14)" }, "<")
        .to("#zonaNegra", { opacity: 0, duration: 1.2, ease: "steps(14)" }, "<")
        .fromTo(".fondo-carpet", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" }, "-=0.3")
        .fromTo("#contenedorConjunto", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" }, "-=0.3");
-       tl1.to({}, { duration: 1.2 });
+       
+    tl1.to({}, { duration: 1.2 });
 
     const tl2 = gsap.timeline({
         scrollTrigger: {
@@ -88,34 +71,21 @@ import Layout from '../layouts/maestra.astro';
         }
     });
 
-    tl2.fromTo("#contenedorFinales", 
-        { opacity: 0 }, 
-        { opacity: 1, duration: 0.5, ease: "steps(4)" }
-    );
+    tl2.fromTo("#contenedorFinales", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "steps(4)" });
 
     let isScrolling = false;
-    
     window.addEventListener("wheel", (e) => {
         if (isScrolling) return;
-        
         const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
         
         if (scrollY < windowHeight * 3) {
             e.preventDefault(); 
             isScrolling = true;
-
             const jumpSize = 80; 
             const direction = e.deltaY > 0 ? 1 : -1;
-
-            window.scrollBy({
-                top: direction * jumpSize,
-                behavior: "auto"
-            });
-
-            setTimeout(() => {
-                isScrolling = false;
-            }, 120); 
+            window.scrollBy({ top: direction * jumpSize, behavior: "auto" });
+            setTimeout(() => { isScrolling = false; }, 120); 
         }
     }, { passive: false });
 </script>
@@ -128,10 +98,27 @@ import Layout from '../layouts/maestra.astro';
         overflow-x: hidden; 
         background-color: #ffffffef; 
     }
-
-    .scroll-container { 
-        width: 100%; 
+    
+    .media-luna-fondo {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 155vw;
+        height: 180px;
+        background: linear-gradient(to bottom, 
+            rgba(255, 255, 255, 1) 30%, 
+            rgba(255, 255, 255, 0.85) 40%, 
+            rgba(255, 255, 255, 0.4) 65%, 
+            rgba(255, 255, 255, 0) 100%
+        );
+        filter: blur(25px);
+        border-radius: 0 0 50% 50%;
+        z-index: 998;
+        pointer-events: none;
     }
+
+    .scroll-container { width: 100%; }
 
     .panel { 
         height: 100vh; 
@@ -143,9 +130,7 @@ import Layout from '../layouts/maestra.astro';
         overflow: hidden; 
     }
 
-    #escena2 {
-        background-color: #ffffff;
-    }
+    #escena2 { background-color: #ffffff; }
 
     .contenedor-fondo-negro {
         position: absolute;
@@ -156,6 +141,7 @@ import Layout from '../layouts/maestra.astro';
         height: 1520px; 
         z-index: 2;
         pointer-events: none;
+        background-color: black;
     }
 
     .fondo-negro-zona {
@@ -194,11 +180,7 @@ import Layout from '../layouts/maestra.astro';
         transform: translateX(-50%);
     }
 
-    .imagen-base { 
-        height: 300px; 
-        width: auto; 
-        object-fit: contain; 
-    }
+    .imagen-base { height: 300px; width: auto; object-fit: contain; }
 
     .bloque-conjunto {
         position: absolute;
@@ -206,7 +188,6 @@ import Layout from '../layouts/maestra.astro';
         right: 1vw; 
         display: flex;
         align-items: flex-end; 
-        gap: 0; 
         opacity: 0;
         z-index: 4;
         cursor: pointer;
@@ -240,69 +221,19 @@ import Layout from '../layouts/maestra.astro';
         width: auto; 
         object-fit: contain; 
         margin-bottom: -20.6px; 
-        margin-left: 0px; 
         position: relative;
         z-index: 2;
         transition: opacity 0.3s steps(4, end);
     }
 
-    .bloque-conjunto:hover .imagen-principal {
-        transform: translateX(-400px) translateY(-20px) scale(1.4); 
-    }
+    .bloque-conjunto:hover .imagen-principal { transform: translateX(-400px) translateY(-20px) scale(1.4); }
+    .bloque-conjunto:hover .imagen-sombra { opacity: 0; }
+    .bloque-conjunto:hover .imagen-revelada { opacity: 1; }
 
-    .bloque-conjunto:hover .imagen-sombra {
-        opacity: 0; 
-    }
-
-    .bloque-conjunto:hover .imagen-revelada {
-        opacity: 1; 
-    }
-
-    .contenedor-imagenes-finales {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        z-index: 2;
-    }
-
-    .grupo-imagenes-finales {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 40px;
-        transform: rotate(0deg) scale(1); 
-    }
-
-    .imagen-fija-final {
-        height: 40vh;
-        width: auto;
-        object-fit: contain;
-    }
-
-    .img-final-1 {
-        height: 40vh;                          /* Cambia la altura/escala base */
-        transform: rotate(0deg)              /* Grados de rotación */
-                   translateX(-200px)             /* Desplazamiento horizontal (izquierda/derecha) */
-                   translateY(0px)             /* Desplazamiento vertical (arriba/abajo) */
-                   scale(1.4);                   /* Escala adicional específica para esta imagen */
-    }
-
-    /* --- IMAGEN 2 (IMG_5907.JPG) --- */
-    .img-final-2 {
-        height: 40vh;                          /* Cambia la altura/escala base */
-        transform: rotate(0deg)                /* Grados de rotación */
-                   translateX(-122px)             /* Desplazamiento horizontal */
-                   translateY(0px)             /* Desplazamiento vertical */
-                   scale(2.2);                   /* Escala adicional específica para esta imagen */
-    }
-
-    /* --- IMAGEN 3 (IMG_5885.JPG) --- */
-    .img-final-3 {
-        height: 40vh;                          /* Cambia la altura/escala base */
-        transform: rotate(0deg)               /* Grados de rotación */
-                   translateX(-35px)             /* Desplazamiento horizontal */
-                   translateY(0px)             /* Desplazamiento vertical */
-                   scale(1.5);                   /* Escala adicional específica para esta imagen */
-    }
+    .contenedor-imagenes-finales { display: flex; justify-content: center; align-items: center; opacity: 0; z-index: 2; }
+    .grupo-imagenes-finales { display: flex; justify-content: center; align-items: center; gap: 40px; }
+    .imagen-fija-final { height: 40vh; width: auto; object-fit: contain; }
+    .img-final-1 { height: 40vh; transform: rotate(0deg) translateX(-200px) translateY(0px) scale(1.4); }
+    .img-final-2 { height: 40vh; transform: rotate(0deg) translateX(-122px) translateY(0px) scale(2.2); }
+    .img-final-3 { height: 40vh; transform: rotate(0deg) translateX(-35px) translateY(0px) scale(1.5); }
 </style>
