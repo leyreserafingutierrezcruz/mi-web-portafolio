@@ -3,275 +3,306 @@ import Layout from '../layouts/maestra.astro';
 ---
 
 <Layout title="la otra altura del suelo — Leyre Serafina Gutiérrez Cruz">
-    <!-- Filtro SVG oculto que genera la deformación matemática de lente -->
-    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
-        <filter id="lupa-fisheye" x="0%" y="0%" width="100%" height="100%">
-            <feImage id="mapa-desplazamiento" preserveAspectRatio="none" result="map" href="" />
-            <feDisplacementMap in="SourceGraphic" in2="map" scale="80" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-    </svg>
+    <div class="scroll-container">
+        <div class="pin-wrapper-global" id="pinGlobal">
+            
+            <div class="panel-sub" id="escena2">
+                <video class="video-detalles-pantalla-completa" autoplay loop muted playsinline>
+                    <source src="/detalles_carton_2.mp4" type="video/mp4" />
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
 
-    <div class="pantalla-completa">
-        <div class="contenedor-imagenes">
-            <div class="contenedor-efecto img-izquierda">
-                <img src="/edit_city2.avif" alt="izquierda" class="img-obra img-izquierda-style" />
-                <div class="destello-espejo mask-izq"></div>
+            <div class="mask-colapso" id="maskColapso">
+                <section class="panel" id="escena1">
+                    <div class="seccion-stopmotion">
+                        <div class="cuadricula-stopmotion">
+                            <div class="contenedor-stopmotion" data-grupo="0">
+                            <img src="/2.avif" alt="Frame 2" class="img-stopmotion" />
+                            <img src="/3.avif" alt="Frame 3" class="img-stopmotion" />
+                            <img src="/4.avif" alt="Frame 4" class="img-stopmotion" />
+                            <img src="/5.avif" alt="Frame 5" class="img-stopmotion" />
+                            <img src="/6.avif" alt="Frame 6" class="img-stopmotion" />
+                            <img src="/7.avif" alt="Frame 7" class="img-stopmotion" />
+                            <img src="/8.avif" alt="Frame 8" class="img-stopmotion" />
+                            <img src="/9.avif" alt="Frame 9" class="img-stopmotion" />
+                            <img src="/10.avif" alt="Frame 10" class="img-stopmotion" />
+                            <img src="/11.avif" alt="Frame 11" class="img-stopmotion" />
+                        </div>
+                        <div class="contenedor-stopmotion" data-grupo="1">
+                            <img src="/2.avif" alt="Frame 2" class="img-stopmotion" />
+                            <img src="/3.avif" alt="Frame 3" class="img-stopmotion" />
+                            <img src="/4.avif" alt="Frame 4" class="img-stopmotion" />
+                            <img src="/5.avif" alt="Frame 5" class="img-stopmotion" />
+                            <img src="/6.avif" alt="Frame 6" class="img-stopmotion" />
+                            <img src="/7.avif" alt="Frame 7" class="img-stopmotion" />
+                            <img src="/8.avif" alt="Frame 8" class="img-stopmotion" />
+                            <img src="/9.avif" alt="Frame 9" class="img-stopmotion" />
+                            <img src="/10.avif" alt="Frame 10" class="img-stopmotion" />
+                            <img src="/11.avif" alt="Frame 11" class="img-stopmotion" />
+                        </div>
+                        <div class="contenedor-stopmotion" data-grupo="2">
+                            <img src="/2.avif" alt="Frame 2" class="img-stopmotion" />
+                            <img src="/3.avif" alt="Frame 3" class="img-stopmotion" />
+                            <img src="/4.avif" alt="Frame 4" class="img-stopmotion" />
+                            <img src="/5.avif" alt="Frame 5" class="img-stopmotion" />
+                            <img src="/6.avif" alt="Frame 6" class="img-stopmotion" />
+                            <img src="/7.avif" alt="Frame 7" class="img-stopmotion" />
+                            <img src="/8.avif" alt="Frame 8" class="img-stopmotion" />
+                            <img src="/9.avif" alt="Frame 9" class="img-stopmotion" />
+                            <img src="/10.avif" alt="Frame 10" class="img-stopmotion" />
+                            <img src="/11.avif" alt="Frame 11" class="img-stopmotion" />
+                        </div>
+                        <div class="contenedor-stopmotion" data-grupo="3">
+                            <img src="/2.avif" alt="Frame 2" class="img-stopmotion" />
+                            <img src="/3.avif" alt="Frame 3" class="img-stopmotion" />
+                            <img src="/4.avif" alt="Frame 4" class="img-stopmotion" />
+                            <img src="/5.avif" alt="Frame 5" class="img-stopmotion" />
+                            <img src="/6.avif" alt="Frame 6" class="img-stopmotion" />
+                            <img src="/7.avif" alt="Frame 7" class="img-stopmotion" />
+                            <img src="/8.avif" alt="Frame 8" class="img-stopmotion" />
+                            <img src="/9.avif" alt="Frame 9" class="img-stopmotion" />
+                            <img src="/10.avif" alt="Frame 10" class="img-stopmotion" />
+                            <img src="/11.avif" alt="Frame 11" class="img-stopmotion" />
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div class="contenedor-efecto img-centro">
-                <img src="/edit_city.avif" alt="centro" class="img-obra img-centro-style" />
-                <div class="destello-espejo mask-cen flip-horizontal"></div>
-            </div>
-            <div class="contenedor-efecto img-derecha">
-                <img src="/edit_city.avif" alt="derecha" class="img-obra img-derecha-style" />
-                <div class="destello-espejo mask-der"></div>
-            </div>
+
         </div>
     </div>
 </Layout>
 
 <style>
-    :global(html), :global(body) {
-        overflow: hidden !important;
-        height: 100vh !important;
-        width: 100vw !important;
-        margin: 0;
-    }
-
-    :global(body) {
-        background-image: 
-            linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), 
-            url('/metal.avif') !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-    }
-
-    .pantalla-completa {
-        position: relative;
-        width: 100vw;
-        height: calc(100vh - 120px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
+    :global(html, body) {
         margin: 0;
         padding: 0;
-        top: 90px; 
+        width: 100vw;
+        overflow-x: hidden;
+        background-color: #ffffff;
+        scrollbar-width: none;
     }
 
-    .contenedor-imagenes {
+    :global(html::-webkit-scrollbar, body::-webkit-scrollbar) {
+        display: none;
+    }
+
+    .scroll-container {
+        width: 100%;
+    }
+
+    .pin-wrapper-global {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+
+    .mask-colapso {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        will-change: height;
+        z-index: 5;
+    }
+
+    .panel {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        background-image: url('/light.avif');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transform-origin: top center;
+        will-change: transform;
+    }
+
+    .seccion-stopmotion {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cuadricula-stopmotion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90vw;
+        max-width: 1400px;
+        gap: 1.5rem;
+        position: relative;
+        flex-wrap: wrap;
+    }
+
+    .contenedor-stopmotion {
+        height: 60vh;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        border-radius: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        width: 100%;
-        height: 100vw; 
-        margin-left: -20vw; 
-        gap: 1vw; 
+        flex: 1 1 220px;
+        max-width: 280px;
+        min-width: 180px;
+        cursor: pointer;
+        z-index: 10;
+        transform-origin: top center;
+        will-change: transform;
     }
 
-    .contenedor-efecto {
-        position: relative;
-        display: inline-block;
-        cursor: crosshair;
-    }
-
-    .img-obra {
-        width: auto;
-        object-fit: contain;
-        display: block;
-        transition: filter 0.1s ease;
-    }
-
-    .contenedor-efecto.activo .img-obra {
-        filter: url(#lupa-fisheye) grayscale(100%) brightness(1.1);
-    }
-    .contenedor-efecto.activo.img-centro .img-obra {
-        filter: url(#lupa-fisheye) grayscale(100%) brightness(1.05);
-        transform: scaleX(-1);
-    }
-
-    .destello-espejo {
+    .img-stopmotion {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        pointer-events: none;
+        object-fit: cover;
         opacity: 0;
-        z-index: 10;
-        
-        background: linear-gradient(
-            to bottom,
-            transparent 0%,
-            rgba(255, 0, 90, 0.2) 30%,
-            rgba(255, 230, 0, 0.6) 45%,
-            rgba(255, 255, 255, 0.95) 50%,
-            rgba(0, 230, 255, 0.6) 55%,
-            rgba(150, 0, 255, 0.4) 70%,
-            transparent 100%
-        );
-        
-        background-size: 100% 300%;
-        background-position: center -100%;
-        
-        mix-blend-mode: color-dodge;
-        
-        -webkit-mask-size: contain;
-        mask-size: contain;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
+        transition: none;
     }
 
-    .flip-horizontal {
-        transform: scaleX(-1);
+    .img-stopmotion.activo {
+        opacity: 1;
     }
 
-    .mask-izq {
-        -webkit-mask-image: url('/edit_city2.avif');
-        mask-image: url('/edit_city2.avif');
-    }
-    .mask-cen, .mask-der {
-        -webkit-mask-image: url('/edit_city.avif');
-        mask-image: url('/edit_city.avif');
+    .panel-sub {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        z-index: 4;
+        will-change: height;
     }
 
-    @keyframes barridoVertical {
-        0% {
-            background-position: center -150%;
-            opacity: 0;
-        }
-        20% {
-            opacity: 1;
-        }
-        80% {
-            opacity: 1;
-        }
-        100% {
-            background-position: center 250%;
-            opacity: 0;
+    .video-detalles-pantalla-completa {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform-origin: bottom center;
+        will-change: transform;
+    }
+
+    @media (max-width: 1200px) {
+        .contenedor-stopmotion {
+            height: 45vh;
+            max-width: 240px;
         }
     }
 
-    .contenedor-efecto:hover .destello-espejo {
-        animation: barridoVertical 1.2s ease-in-out forwards;
-    }
-
-    .img-derecha {
-        max-height: 82vh; 
-        transform: translateY(3px); 
-        z-index: 1;
-    }
-    .img-derecha-style {
-        max-height: 82vh;
-    }
-
-    .img-centro {
-        max-height: 72vh; 
-        z-index: 2;
-    }
-    .img-centro-style {
-        max-height: 72vh;
-        transform: scaleX(-1) translateY(0px); 
-        filter: grayscale(100%) brightness(1.05); 
-    }
-
-    .img-izquierda {
-        max-height: 68vh; 
-        z-index: 3;
-    }
-    .img-izquierda-style {
-        max-height: 68vh;
-        transform: translateY(0px); 
-        filter: grayscale(100%) brightness(1.15); 
-    }
-
-    @media (max-width: 768px) {
-        .pantalla-completa {
-            height: calc(100vh - 100px);
-            padding: 1rem;
-            overflow-y: auto;
-            top: 0;
-        }
-        .contenedor-imagenes {
-            flex-direction: column;
+    @media (max-width: 900px) {
+        .cuadricula-stopmotion {
             gap: 1rem;
-            height: auto;
-            margin-left: 0;
+            width: 95vw;
         }
-        .contenedor-efecto {
-            max-height: 35vh !important;
-            transform: none !important;
+        .contenedor-stopmotion {
+            height: 38vh;
+            min-width: 40%;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .cuadricula-stopmotion {
+            flex-direction: column;
+            height: auto;
+            padding: 2rem 0;
+            overflow-y: auto;
+        }
+        .contenedor-stopmotion {
+            width: 75vw;
+            height: auto;
+            max-width: 300px;
+            min-width: unset;
         }
     }
 </style>
 
 <script>
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const mapElement = document.getElementById('mapa-desplazamiento') as unknown as SVGElement;
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
 
-    function generarMapaLupa(px: number, py: number, ancho: number, alto: number) {
-        canvas.width = ancho;
-        canvas.height = alto;
-        if (!ctx) return;
+    const gruposStopMotion = document.querySelectorAll('.contenedor-stopmotion');
 
-        const imgData = ctx.createImageData(ancho, alto);
-        const data = imgData.data;
-        const radioLupa = 120;
+    gruposStopMotion.forEach((grupo) => {
+        const imagenesFrames = grupo.querySelectorAll('.img-stopmotion');
+        const grupoId = parseInt(grupo.getAttribute('data-grupo') || '0', 10);
+        const totalFrames = imagenesFrames.length;
+        
+        let indiceActual = (grupoId * 3) % totalFrames;
+        let estaPausado = false;
 
-        for (let y = 0; y < alto; y++) {
-            for (let x = 0; x < ancho; x++) {
-                const index = (y * ancho + x) * 4;
-                const dx = x - px;
-                const dy = y - py;
-                const distancia = Math.sqrt(dx * dx + dy * dy);
+        function actualizarFrames() {
+            imagenesFrames.forEach((img, index) => {
+                if (index === indiceActual) img.classList.add('activo');
+                else img.classList.remove('activo');
+            });
+        }
 
-                let r = 128;
-                let g = 128;
+        actualizarFrames();
 
-                if (distancia < radioLupa) {
-                    const factor = Math.sin((distancia / radioLupa) * Math.PI * 0.5) * 40;
-                    r = Math.min(255, Math.max(0, 128 + (dx / (distancia || 1)) * factor));
-                    g = Math.min(255, Math.max(0, 128 + (dy / (distancia || 1)) * factor));
+        setTimeout(() => {
+            setInterval(() => {
+                if (!estaPausado) {
+                    indiceActual = (indiceActual + 1) % totalFrames;
+                    actualizarFrames();
                 }
+            }, 200);
+        }, grupoId * 250);
 
-                data[index] = r;     
-                data[index + 1] = g; 
-                data[index + 2] = 0;
-                data[index + 3] = 255; 
-            }
-        }
-
-        ctx.putImageData(imgData, 0, 0);
-        if (mapElement) {
-            mapElement.setAttribute('href', canvas.toDataURL());
-        }
-    }
-
-    const contenedores = document.querySelectorAll('.contenedor-efecto');
-
-    contenedores.forEach((contenedor) => {
-        const el = contenedor as HTMLElement;
-
-        el.addEventListener('mouseenter', () => {
-            el.classList.add('activo');
+        grupo.addEventListener('mouseenter', () => {
+            estaPausado = true;
         });
 
-        el.addEventListener('mousemove', (e: Event) => {
-            const mouseEvent = e as MouseEvent;
-            const rect = el.getBoundingClientRect();
-            
-            const x = mouseEvent.clientX - rect.left;
-            const y = mouseEvent.clientY - rect.top;
-
-            generarMapaLupa(x, y, Math.round(rect.width), Math.round(rect.height));
-        });
-
-        el.addEventListener('mouseleave', () => {
-            el.classList.remove('activo');
+        grupo.addEventListener('mouseleave', () => {
+            estaPausado = false;
         });
     });
+
+    const tlTransicion = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#pinGlobal",
+            start: "top top",
+            end: "+=1200",
+            pin: true,
+            scrub: true
+        }
+    });
+
+    tlTransicion
+        .to("#maskColapso", { height: "0vh", ease: "steps(12)", duration: 1 }, 0)
+        .to("#escena1", { scaleY: 0.1, ease: "steps(12)", duration: 1 }, 0)
+        .to(".contenedor-stopmotion", { scaleY: 0.1, ease: "steps(12)", duration: 1 }, 0)
+        .to("#escena2", { height: "100vh", ease: "steps(12)", duration: 1 }, 0)
+        .to(".video-detalles-pantalla-completa", { scaleY: 1, ease: "steps(12)", duration: 1 }, 0);
+
+    gsap.set("#escena2", { height: "0vh" });
+    gsap.set(".video-detalles-pantalla-completa", { scaleY: 0.1 });
 </script>

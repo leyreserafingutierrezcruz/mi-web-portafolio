@@ -7,6 +7,23 @@ import Layout from '../layouts/maestra.astro';
     <!-- Contenedor donde aparecerán las estelas del ratón -->
     <div class="rastros-container" id="rastros-container"></div>
 
+    <!-- Contenido principal del currículum con el arte ASCII -->
+    <main class="contenido-cv">
+        <div class="contenedor-ascii-cv">
+            <pre class="arte-ascii">
+       .-.      _______                             .  '  *   .  . '
+      ()``; |==|_______D                              .  * * -+-
+      /  ('        /|\                             .    * .    '  *
+  (  /   |        / | \                                * .  ' .  .
+  \(__)_]]      /  |  \                            *   *  .   .
+                                                     '   *
+------------------------------------------------
+            </pre>
+        </div>
+        
+        <!-- Aquí puedes seguir añadiendo el resto de secciones de tu currículum -->
+    </main>
+
 </Layout>
 
 <script>
@@ -57,7 +74,6 @@ import Layout from '../layouts/maestra.astro';
         height: 120px;
         transform: translate(-50%, -50%);
         pointer-events: none;
-        /* Cambiado a 0 (o eliminado) para que sea un cuadrado perfecto */
         border-radius: 0; 
         background: radial-gradient(
             circle,
@@ -72,11 +88,33 @@ import Layout from '../layouts/maestra.astro';
 
     .contenido-cv {
         position: relative;
-        z-index: 2;
+        z-index: 2; /* Se sitúa por encima de la estela del ratón */
         margin-top: 130px;
         padding: 2rem;
         box-sizing: border-box;
         width: 100%;
         min-height: calc(100vh - 130px);
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra el contenido horizontalmente */
+    }
+
+    .contenedor-ascii-cv {
+        margin-bottom: 2rem;
+    }
+
+    .arte-ascii {
+        font-family: monospace;
+        font-size: 1.2vw;
+        line-height: 1.1;
+        color: #111111; /* Color oscuro para que contraste bien con el fondo blanco */
+        margin: 0;
+        white-space: pre;
+    }
+
+    @media (max-width: 768px) {
+        .arte-ascii {
+            font-size: 2.5vw; /* Se adapta automáticamente en pantallas pequeñas */
+        }
     }
 </style>
