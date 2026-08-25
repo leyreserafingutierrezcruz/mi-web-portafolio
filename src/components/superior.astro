@@ -14,7 +14,7 @@
 ⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⢀⣧⡾⠁⠀⠀⠀
 ⠀⠀⠀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⣾⠃⠀⠀⠀⠀⠀
 ⠀⠀⠀⣹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠁⠀⠀⡀⠀⠀⢰⡾⠋⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢻⡇⣀⡀⠀⠺⣿⠇⠀⣀⣤⣄⣀⣠⣬⣥⣤⠾⠛⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⻻⡇⣀⡀⠀⠺⣿⠇⠀⣀⣤⣄⣀⣠⣬⣥⣤⠾⠛⠁⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠉⠛⠓⠂⠤⠤⠖⠊⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀&nbsp;&nbsp;&nbsp;&nbsp;</span>
     </div>
 </div>
@@ -46,6 +46,7 @@
         overflow: hidden;
         z-index: 9999;
         cursor: url('/gifglitter.gif'), pointer !important;
+        
     }
     
     .sub-track {
@@ -60,10 +61,18 @@
         animation-play-state: paused !important;
     }
 
+    @keyframes arcoiris-texto {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+    }
+
     .sub-track span {
         font-family: inherit;
         font-size: 12px;
-        color: #ff2c2c;
+        background: linear-gradient(to right, red, orange, yellow, rgb(91, 191, 91), cyan, blue, violet);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: arcoiris-texto 6s linear infinite;
         line-height: 24px;
         display: inline-block;
     }

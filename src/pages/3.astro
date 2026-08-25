@@ -98,6 +98,13 @@ import Layout from '../layouts/maestra.astro';
         width: 100vw; 
         overflow-x: hidden; 
         background-color: #ffffffef; 
+        /* Oculta la barra de scroll vertical en Firefox */
+        scrollbar-width: none; 
+    }
+    
+    /* Oculta la barra de scroll vertical en Chrome, Safari y Edge */
+    :global(html::-webkit-scrollbar, body::-webkit-scrollbar) {
+        display: none;
     }
     
     .media-luna-fondo {

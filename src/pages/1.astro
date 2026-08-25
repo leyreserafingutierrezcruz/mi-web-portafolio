@@ -67,7 +67,6 @@ import Layout from '../layouts/maestra.astro';
                         </div>
                             </div>
                         </div>
-                    </div>
                 </section>
             </div>
 
@@ -76,6 +75,31 @@ import Layout from '../layouts/maestra.astro';
 </Layout>
 
 <style>
+    /* Por defecto (arriba en el stop-motion), la marquesina se ve perfectamente */
+    :global(.sub-superior) {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    /* Cuando se añade la clase al body (al hacer scroll hacia el vídeo), la marquesina se oculta */
+    :global(body.ocultar-marquesina) :global(.sub-superior) {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* REAJUSTE DEL LOGO FLOTANTE:
+       - Por defecto (con marquesina arriba): Se queda a 35px.
+       - Cuando se oculta la marquesina (al hacer scroll): Sube a 15px. */
+    :global(.logo-inicio-flotante) {
+        top: 35px !important;
+        transition: top 0.4s ease !important;
+    }
+
+    :global(body.ocultar-marquesina) :global(.logo-inicio-flotante) {
+        top: 15px !important;
+    }
+
     :global(html, body) {
         margin: 0;
         padding: 0;
@@ -292,7 +316,15 @@ import Layout from '../layouts/maestra.astro';
             start: "top top",
             end: "+=1200",
             pin: true,
-            scrub: true
+            scrub: true,
+            // Detecta en tiempo real el progreso del scroll para ocultar/mostrar la marquesina y mover el logo
+            onUpdate: (self) => {
+                if (self.progress > 0.05) {
+                    document.body.classList.add("ocultar-marquesina");
+                } else {
+                    document.body.classList.remove("ocultar-marquesina");
+                }
+            }
         }
     });
 

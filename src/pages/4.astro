@@ -2,43 +2,121 @@
 import Layout from '../layouts/maestra.astro';
 ---
 
-<Layout title="DONDE QUEDAN LOS ESPACIOS? — Leyre Serafina Gutiérrez Cruz">
-    <div class="contenido-obra">
-        <h1 class="titulo-obra-interna">DONDE QUEDAN LOS ESPACIOS?</h1>
+<Layout title="EXTRUIR LA DISTANCIA — Leyre Serafina Gutiérrez Cruz">
+    <div class="scroll-container">
         
-        <div class="galeria">
-            <img src="/obras/obra4-foto1.jpg" alt="Donde quedan los espacios" />
-        </div>
+        <!-- 1. Primera sección: El vídeo arriba del todo (la marquesina estará oculta aquí) -->
+        <section class="seccion-video">
+            <video class="video-detalles-pantalla-completa" autoplay loop muted playsinline>
+                <source src="/Cometita_brake.mp4" type="video/mp4" />
+                Tu navegador no soporta la reproducción de video.
+            </video>
+        </section>
+
+        <!-- 2. Segunda sección: Las 3 fotos abajo (al llegar aquí reaparece la marquesina) -->
+        <section class="seccion-fotos">
+            <div class="fila-tres-fotos">
+                <img src="/foto-1.avif" alt="Foto 1" class="imagen-base img-f1" />
+                <img src="/foto-2.avif" alt="Foto 2" class="imagen-base img-f2" />
+                <img src="/foto-3.avif" alt="Foto 3" class="imagen-base img-f3" />
+            </div>
+        </section>
+
     </div>
 </Layout>
 
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Detecta cuando llegamos a la sección de fotos para mostrar la marquesina
+    ScrollTrigger.create({
+        trigger: ".seccion-fotos",
+        start: "top 80%", // Se activa cuando la sección de fotos asoma por abajo
+        onEnter: () => document.body.classList.add("mostrar-marquesina"),
+        onLeaveBack: () => document.body.classList.remove("mostrar-marquesina")
+    });
+</script>
+
 <style>
-    .contenido-obra {
-        margin-top: 150px;
-        padding: 0 3rem 4rem 3rem;
-        max-width: 1000px;
-        margin-left: auto;
-        margin-right: auto;
-        box-sizing: border-box;
+    /* Oculta la marquesina por defecto (mientras estás en el vídeo arriba) */
+    :global(.sub-superior) {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
-    .titulo-obra-interna {
-        font-size: 2.5rem;
-        color: #d2384a;
-        text-transform: uppercase;
-        margin-bottom: 2rem;
-        letter-spacing: 1px;
+    /* Cuando se añade la clase al body (al bajar a las fotos), la marquesina aparece */
+    :global(body.mostrar-marquesina) :global(.sub-superior) {
+        opacity: 1;
+        visibility: visible;
     }
 
-    .galeria {
+    /* REAJUSTE DEL LOGO FLOTANTE:
+       - Por defecto (arriba sin marquesina): Sube a 15px para ocupar bien el espacio superior.
+       - Cuando aparece la marquesina (al bajar): Baja a 35px para no solaparse con ella. */
+    :global(.logo-inicio-flotante) {
+        top: 15px !important;
+        transition: top 0.4s ease !important;
+    }
+
+    :global(body.mostrar-marquesina) :global(.logo-inicio-flotante) {
+        top: 35px !important;
+    }
+
+    :global(html, body) { 
+        margin: 0; 
+        padding: 0; 
+        width: 100vw; 
+        overflow-x: hidden; 
+        background-color: #ffffff; 
+        scrollbar-width: none; 
+    }
+    
+    :global(html::-webkit-scrollbar, body::-webkit-scrollbar) {
+        display: none;
+    }
+
+    .scroll-container { 
+        width: 100vw; 
+        position: relative;
+    }
+
+    .seccion-video {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .video-detalles-pantalla-completa {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        display: block;
+    }
+
+    .seccion-fotos {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
         display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+    }
+    
+    .fila-tres-fotos { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        gap: 30px; 
     }
 
-    .galeria img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 4px;
+    .imagen-base { 
+        height: 35vh; 
+        width: auto; 
+        object-fit: contain; 
     }
 </style>
