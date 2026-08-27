@@ -5,20 +5,23 @@ import Layout from '../layouts/maestra.astro';
 <Layout title="EXTRUIR LA DISTANCIA — Leyre Serafina Gutiérrez Cruz">
     <div class="scroll-container">
         
-        <!-- 1. Primera sección: El vídeo arriba del todo (la marquesina estará oculta aquí) -->
         <section class="seccion-video">
             <video class="video-detalles-pantalla-completa" autoplay loop muted playsinline>
-                <source src="/Cometita_brake.mp4" type="video/mp4" />
+                <source src="/cometita.mp4" type="video/mp4" />
                 Tu navegador no soporta la reproducción de video.
             </video>
         </section>
 
-        <!-- 2. Segunda sección: Las 3 fotos abajo (al llegar aquí reaparece la marquesina) -->
-        <section class="seccion-fotos">
-            <div class="fila-tres-fotos">
-                <img src="/foto-1.avif" alt="Foto 1" class="imagen-base img-f1" />
-                <img src="/foto-2.avif" alt="Foto 2" class="imagen-base img-f2" />
-                <img src="/foto-3.avif" alt="Foto 3" class="imagen-base img-f3" />
+        <section class="seccion-foto-full" id="seccionIman">
+            <img src="/DSC07575.JPG" alt="DSC07575" class="imagen-full-screen" />
+        </section>
+
+        <section class="seccion-composicion" id="seccionRainbow">
+            <div class="fondo-rainbow"></div>
+            
+            <div class="contenedor-collage">
+                <img src="/DSC07534.JPG" alt="DSC07534" class="foto-izquierda" />
+                <img src="/DSC07544.JPG" alt="DSC07544" class="foto-derecha" />
             </div>
         </section>
 
@@ -30,32 +33,39 @@ import Layout from '../layouts/maestra.astro';
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     gsap.registerPlugin(ScrollTrigger);
 
-    // Detecta cuando llegamos a la sección de fotos para mostrar la marquesina
     ScrollTrigger.create({
-        trigger: ".seccion-fotos",
-        start: "top 80%", // Se activa cuando la sección de fotos asoma por abajo
+        trigger: "#seccionIman",
+        start: "top 80%",
         onEnter: () => document.body.classList.add("mostrar-marquesina"),
         onLeaveBack: () => document.body.classList.remove("mostrar-marquesina")
+    });
+
+    ScrollTrigger.create({
+        trigger: "#seccionIman",
+        start: "top top",
+        end: "+=500",
+        pin: true,
+        scrub: true,
+        snap: {
+            snapTo: 1,      
+            duration: 0.4,   
+            ease: "power2.inOut"
+        }
     });
 </script>
 
 <style>
-    /* Oculta la marquesina por defecto (mientras estás en el vídeo arriba) */
     :global(.sub-superior) {
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
-    /* Cuando se añade la clase al body (al bajar a las fotos), la marquesina aparece */
     :global(body.mostrar-marquesina) :global(.sub-superior) {
         opacity: 1;
         visibility: visible;
     }
 
-    /* REAJUSTE DEL LOGO FLOTANTE:
-       - Por defecto (arriba sin marquesina): Sube a 15px para ocupar bien el espacio superior.
-       - Cuando aparece la marquesina (al bajar): Baja a 35px para no solaparse con ella. */
     :global(.logo-inicio-flotante) {
         top: 15px !important;
         transition: top 0.4s ease !important;
@@ -97,26 +107,70 @@ import Layout from '../layouts/maestra.astro';
         display: block;
     }
 
-    .seccion-fotos {
+    .seccion-foto-full {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+
+    .imagen-full-screen {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover; 
+        display: block;
+    }
+
+    .seccion-composicion {
         width: 100vw;
         height: 100vh;
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
         background-color: #ffffff;
     }
-    
-    .fila-tres-fotos { 
-        display: flex; 
-        align-items: center; 
-        justify-content: center;
-        gap: 30px; 
+
+    .fondo-rainbow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/rainbow.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1;
     }
 
-    .imagen-base { 
-        height: 35vh; 
-        width: auto; 
-        object-fit: contain; 
+    .contenedor-collage {
+        position: relative;
+        width: 90vw;
+        max-width: 1400px;
+        height: 80vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 2;
+    }
+
+    .foto-izquierda {
+        height: 83vh;
+        width: auto;
+        object-fit: contain;
+        z-index: 2;
+        transform: translate(9vw, 2vh); 
+    }
+
+    .foto-derecha {
+        width: 60vw;
+        max-width: 635px;
+        height: auto;
+        object-fit: contain;
+        z-index: 3;
+        transform: translate(-7vw, 20vh); 
     }
 </style>

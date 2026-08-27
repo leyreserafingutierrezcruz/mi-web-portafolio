@@ -6,8 +6,16 @@ import Layout from '../layouts/maestra.astro';
     <div class="media-luna-fondo"></div>
 
     <div class="scroll-container">
+        <!-- ESCENA ÚNICA: Contiene la apertura inicial y el notebook que se funde y se queda fijo -->
         <section class="panel" id="escena1">
-            <div class="fondo-carpet"></div>
+            <div class="fondo-notebook"></div>
+
+            <div class="contenedor-imagenes-intermedias" id="contenedorIntermedias">
+                <div class="grupo-imagenes-intermedias">
+                    <img src="/IMG_5876.jpg" alt="IMG 5876" class="imagen-intermedia img-int-1" />
+                    <img src="/IMG_5885.jpg" alt="IMG 5885" class="imagen-intermedia img-int-2" />
+                </div>
+            </div>
 
             <div class="contenedor-fondo-negro" id="zonaNegra">
                 <div class="fondo-negro-zona"></div>
@@ -17,22 +25,14 @@ import Layout from '../layouts/maestra.astro';
                 <img src="/IMG_5882_2.avif" alt="IMG 5882" class="imagen-base imagen-izq" />
                 <img src="/IMG_5884_2.avif" alt="IMG 5884" class="imagen-base imagen-der" />
             </div>
+        </section>
 
+        <!-- ESCENA 2: Pasa directamente a la carpeta o siguiente contenido -->
+        <section class="panel normal-seccion" id="escena3">
+            <div class="fondo-carpet"></div>
             <div class="contenedor-imagenes-estaticas" id="contenedorEstaticas">
                 <img src="/IMG_5866_2.avif" alt="IMG 5866_2" class="imagen-estatica" />
                 <img src="/IMG_5868_2.avif" alt="IMG 5868_2" class="imagen-estatica" />
-            </div>
-        </section>
-
-        <section class="panel" id="escena2">
-            <div class="fondo-notebook"></div>
-
-            <div class="contenedor-imagenes-finales" id="contenedorFinales">
-                <div class="grupo-imagenes-finales">
-                    <img src="/IMG_5909.avif" alt="IMG 5909" class="imagen-fija-final img-final-1" /> 
-                    <img src="/IMG_5907.avif" alt="IMG 5907" class="imagen-fija-final img-final-2" />
-                    <img src="/IMG_5885.avif" alt="IMG 5885" class="imagen-fija-final img-final-3" />
-                </div>
             </div>
         </section>
     </div>
@@ -47,48 +47,28 @@ import Layout from '../layouts/maestra.astro';
         scrollTrigger: {
             trigger: "#escena1",
             start: "top top",
-            end: "+=1400", 
+            end: "+=5500", // <--- Recorrido de scroll muy largo para que necesites varios giros de rueda completos
             pin: true,
-            scrub: true
+            pinSpacing: true,
+            scrub: 1 // <--- El scrub con un número (como 1) suaviza la inercia para que acompañe el movimiento del ratón con precisión
         }
     });
 
-    tl1.to(".imagen-izq", { x: "-75vw", duration: 1, ease: "steps(18)" })
-       .to(".imagen-der", { x: "75vw", duration: 1, ease: "steps(18)" }, "<")
-       .to(".fondo-negro-zona", { opacity: 0, duration: 1, ease: "steps(14)" }, "<")
-       .to("#zonaNegra", { opacity: 0, duration: 1.2, ease: "steps(14)" }, "<")
-       .fromTo(".fondo-carpet", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" }, "-=0.3")
-       .fromTo("#contenedorEstaticas", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "steps(4)" }, "-=0.3");
+    // Fase 1: Apertura escalonada muy larga (muchos steps y duración amplia)
+    tl1.to(".imagen-izq", { x: "-75vw", duration: 4, ease: "steps(24)" }) 
+       .to(".imagen-der", { x: "75vw", duration: 4, ease: "steps(24)" }, "<")
+       .to(".fondo-negro-zona", { opacity: 0.5, duration: 5, ease: "steps(10)" }, "<")
+       .to("#zonaNegra", { opacity: 0, duration: 3.2, ease: "steps(6)" }, "<")
        
-    tl1.to({}, { duration: 1.2 });
+       // Fase 2: Pausa intermedia con las imágenes abiertas
+       .to({}, { duration: 1.5 }) 
 
-    const tl2 = gsap.timeline({
-        scrollTrigger: {
-            trigger: "#escena2",
-            start: "top top",
-            end: "+=200",
-            pin: true,
-            scrub: true
-        }
-    });
-
-    tl2.fromTo("#contenedorFinales", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "steps(4)" });
-
-    let isScrolling = false;
-    window.addEventListener("wheel", (e) => {
-        if (isScrolling) return;
-        const scrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
-        
-        if (scrollY < windowHeight * 3) {
-            e.preventDefault(); 
-            isScrolling = true;
-            const jumpSize = 80; 
-            const direction = e.deltaY > 0 ? 1 : -1;
-            window.scrollBy({ top: direction * jumpSize, behavior: "auto" });
-            setTimeout(() => { isScrolling = false; }, 120); 
-        }
-    }, { passive: false });
+       // Fase 3: El notebook y sus imágenes interiores aparecen fundiéndose
+       .to(".fondo-notebook", { opacity: 1, duration: 2.5, ease: "steps(6)" })
+       .to(".contenedor-imagenes-intermedias", { opacity: 1, duration: 2.5, ease: "steps(6)" }, "<")
+       
+       // Fase 4: Tiempo estático final viendo el notebook antes de pasar a la siguiente escena
+       .to({}, { duration: 4 }); 
 </script>
 
 <style>
@@ -98,11 +78,9 @@ import Layout from '../layouts/maestra.astro';
         width: 100vw; 
         overflow-x: hidden; 
         background-color: #ffffffef; 
-        /* Oculta la barra de scroll vertical en Firefox */
         scrollbar-width: none; 
     }
     
-    /* Oculta la barra de scroll vertical en Chrome, Safari y Edge */
     :global(html::-webkit-scrollbar, body::-webkit-scrollbar) {
         display: none;
     }
@@ -136,9 +114,25 @@ import Layout from '../layouts/maestra.astro';
         align-items: center; 
         position: relative; 
         overflow: hidden; 
+        background-color: #ffffff;
     }
 
-    #escena2 { background-color: #ffffff; }
+    .normal-seccion {
+        position: relative;
+    }
+
+    .fondo-carpet {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1;
+        background-image: url('/try.png');
+    }
 
     .fondo-notebook {
         position: absolute;
@@ -151,6 +145,8 @@ import Layout from '../layouts/maestra.astro';
         background-position: center;
         background-repeat: no-repeat;
         z-index: 1;
+        opacity: 0; 
+        transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); 
     }
 
     .contenedor-fondo-negro {
@@ -162,7 +158,7 @@ import Layout from '../layouts/maestra.astro';
         height: 1520px; 
         z-index: 2;
         pointer-events: none;
-        background-color: black;
+        background-color: rgb(255, 255, 255);
     }
 
     .fondo-negro-zona {
@@ -175,20 +171,6 @@ import Layout from '../layouts/maestra.astro';
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-    }
-
-    .fondo-carpet {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-image: url('/chalk.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        opacity: 0;
-        z-index: 1; 
     }
     
     .fila-inicial { 
@@ -203,28 +185,49 @@ import Layout from '../layouts/maestra.astro';
 
     .imagen-base { height: 300px; width: auto; object-fit: contain; }
 
-    .contenedor-imagenes-estaticas {
-        position: absolute;
-        top: 32vh;
+    .contenedor-imagenes-intermedias {
+        position: relative;
         display: flex;
         justify-content: center;
-        align-items: flex-end;
-        gap: 130px;
-        opacity: 0;
-        z-index: 4;
+        align-items: center;
+        z-index: 2; 
+        opacity: 0; 
+    }
+
+    .grupo-imagenes-intermedias {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px; 
+    }
+
+    .imagen-intermedia {
+        height: 40vh; 
+        width: auto;
+        object-fit: contain;
+    }
+
+    .img-int-1 { 
+        transform: translateY(33px) translateX(-60px) scale(1.9) rotate(0deg); 
+    } 
+
+    .img-int-2 { 
+        transform: translateY(35px) translateX(120px) scale(1.9) rotate(0deg); 
+    }  
+
+    .contenedor-imagenes-estaticas {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap:20px;
+        z-index: 2; 
+        transform: translateX(250px);
     }
 
     .imagen-estatica {
-        height: 350px;
+        height: 300px;
         width: auto;
         object-fit: contain;
-        transform: translateX(50%);
     }
-
-    .contenedor-imagenes-finales { display: flex; justify-content: center; align-items: center; opacity: 0; z-index: 2; }
-    .grupo-imagenes-finales { display: flex; justify-content: center; align-items: center; gap: 40px; }
-    .imagen-fija-final { height: 40vh; width: auto; object-fit: contain; }
-    .img-final-1 { height: 40vh; transform: rotate(0deg) translateX(-200px) translateY(0px) scale(1.4); }
-    .img-final-2 { height: 40vh; transform: rotate(0deg) translateX(-122px) translateY(0px) scale(2.2); }
-    .img-final-3 { height: 40vh; transform: rotate(0deg) translateX(-35px) translateY(0px) scale(1.5); }
 </style>

@@ -19,7 +19,7 @@ import Layout from '../layouts/maestra.astro';
             <section class="panel-sub" id="escena2">  
                 <div class="contenedor-video" id="contenedor-clic">
                     <video id="mi-video" class="video-obra" autoplay loop playsinline>
-                        <source src="/Llaves_2.mp4" type="video/mp4" />
+                        <source src="/hojas_video.mp4" type="video/mp4" />
                         Tu navegador no soporta la reproducción de video.
                     </video>
                     <button id="boton-audio" class="btn-audio" type="button" aria-label="Audio">
@@ -33,7 +33,7 @@ import Layout from '../layouts/maestra.astro';
 
             <section class="panel-sub" id="escena3">
                 <div class="visor-mariposa-contenedor" id="contenedorMariposa">
-                    <img src="/mariposa.avif" alt="Mariposa" class="imagen-mariposa" id="img-mariposa" />
+                    <img src="/mariposa.png" alt="Mariposa" class="imagen-mariposa" id="img-mariposa" />
                 </div>
             </section>
         </div>
@@ -78,7 +78,7 @@ import Layout from '../layouts/maestra.astro';
 
     // 3. Animación aleatoria de la mariposa (Escena 3)
     const mariposa = document.getElementById('img-mariposa') as HTMLImageElement;
-    const fuentesMariposa = ['/mariposa.avif', '/mariposa_2.avif'];
+    const fuentesMariposa = ['/mariposa.png', '/mariposa_2.png'];
     let indiceMariposa = 0;
 
     if (mariposa) {
@@ -109,7 +109,9 @@ import Layout from '../layouts/maestra.astro';
     tlSub
         .to({}, { duration: 6 }) 
         .to("#escena2", { opacity: 0, duration: 0.5 }) 
-        .fromTo("#escena3", { opacity: 0 }, { opacity: 1, duration: 5 }, "<"); 
+        .fromTo("#escena3", { opacity: 0 }, { opacity: 1, duration: 5 }, "<")
+        // AQUÍ OCULTAMOS LA MEDIA LUNA JUSTO AL ENTRAR EN LA MARIPOSA:
+        .to(".media-luna-fondo", { opacity: 0, duration: 0.1 }, "<"); 
 
     // 5. Control de inercia del scroll
     let isScrolling = false;
@@ -160,6 +162,7 @@ import Layout from '../layouts/maestra.astro';
         border-radius: 0 0 50% 50%;
         z-index: 998;
         pointer-events: none;
+        will-change: opacity; /* Añadido para optimizar la transición */
     }
 
     .scroll-container { 
@@ -324,6 +327,7 @@ import Layout from '../layouts/maestra.astro';
         width: 100vw;
         height: 100vh;
         object-fit: contain;
+        object-position: center;
         display: block;
     }
 </style>
