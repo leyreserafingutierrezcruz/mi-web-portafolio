@@ -41,14 +41,16 @@
         top: 0;
         left: 0;
         width: 100vw;
-        height: 24px;
-        background-color: #ffffff;
+        /* antes: height fija de 24px.
+           ahora: escala entre 16px (portátil pequeño) y 24px (monitor grande),
+           con un punto intermedio fluido basado en el ancho de la ventana */
+        height: clamp(10px, 1.1vw, 16px);
+        background-color: #505050;
         overflow: hidden;
         z-index: 9999;
         cursor: url('/gifglitter.gif'), pointer !important;
-        
     }
-    
+
     .sub-track {
         display: flex;
         width: max-content;
@@ -68,12 +70,14 @@
 
     .sub-track span {
         font-family: inherit;
-        font-size: 12px;
+        /* antes: 12px fijo. ahora escala junto con la barra */
+        font-size:clamp(6px, 0.6vw, 9px);
         background: linear-gradient(to right, red, orange, yellow, rgb(91, 191, 91), cyan, blue, violet);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         animation: arcoiris-texto 6s linear infinite;
-        line-height: 24px;
+        /* antes: line-height fijo de 24px, ahora sigue a la altura de la barra */
+        line-height: clamp(10px, 1.1vw, 16px);
         display: inline-block;
     }
 

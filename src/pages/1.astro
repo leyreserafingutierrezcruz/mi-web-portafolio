@@ -2,7 +2,7 @@
 import Layout from '../layouts/maestra.astro';
 ---
 
-<Layout title="la otra altura del suelo — Leyre Serafina Gutiérrez Cruz">
+<Layout title="la otra altura del suelo — Leyre Serafina Gutiérrez Cruz" pantallaCompleta={true}>
     <div class="scroll-container">
         <div class="pin-wrapper-global" id="pinGlobal">
             
@@ -167,15 +167,15 @@ import Layout from '../layouts/maestra.astro';
         justify-content: center;
         align-items: center;
         width: 90vw;
-        max-width: 1400px;
+        max-width: 1800px;
         gap: 1.5rem;
         position: relative;
         flex-wrap: wrap;
     }
 
     .contenedor-stopmotion {
-        height: 60vh;
         aspect-ratio: 3 / 4;
+        max-height: 60vh;
         overflow: hidden;
         border-radius: 30px;
         display: flex;
@@ -183,7 +183,7 @@ import Layout from '../layouts/maestra.astro';
         align-items: center;
         position: relative;
         flex: 1 1 220px;
-        max-width: 280px;
+        max-width: 500px;
         min-width: 180px;
         cursor: pointer;
         z-index: 10;
@@ -236,7 +236,7 @@ import Layout from '../layouts/maestra.astro';
 
     @media (max-width: 1200px) {
         .contenedor-stopmotion {
-            height: 45vh;
+            max-height: 45vh;
             max-width: 240px;
         }
     }
@@ -247,7 +247,7 @@ import Layout from '../layouts/maestra.astro';
             width: 95vw;
         }
         .contenedor-stopmotion {
-            height: 38vh;
+            max-height: 38vh;
             min-width: 40%;
         }
     }
@@ -317,7 +317,6 @@ import Layout from '../layouts/maestra.astro';
             end: "+=1200",
             pin: true,
             scrub: true,
-            // Detecta en tiempo real el progreso del scroll para ocultar/mostrar la marquesina y mover el logo
             onUpdate: (self) => {
                 if (self.progress > 0.05) {
                     document.body.classList.add("ocultar-marquesina");

@@ -2,7 +2,7 @@
 import Layout from '../layouts/maestra.astro';
 ---
 
-<Layout title="EXTRUIR LA DISTANCIA — Leyre Serafina Gutiérrez Cruz">
+<Layout title="EXTRUIR LA DISTANCIA — Leyre Serafina Gutiérrez Cruz" pantallaCompleta={true}>
     <div class="media-luna-fondo"></div>
 
     <div class="scroll-container">
@@ -10,20 +10,27 @@ import Layout from '../layouts/maestra.astro';
         <section class="panel" id="escena1">
             <div class="fondo-notebook"></div>
 
-            <div class="contenedor-imagenes-intermedias" id="contenedorIntermedias">
-                <div class="grupo-imagenes-intermedias">
-                    <img src="/IMG_5876.jpg" alt="IMG 5876" class="imagen-intermedia img-int-1" />
-                    <img src="/IMG_5885.jpg" alt="IMG 5885" class="imagen-intermedia img-int-2" />
+            <!-- CAJA DE PROPORCIÓN FIJA (16:9): todo lo que necesita registro preciso
+                 vive aquí dentro, medido en cqw/cqh (respecto a esta caja, no al viewport).
+                 Así la composición no se deforma aunque cambie la proporción de la pantalla. -->
+            <div class="caja-composicion" id="cajaComposicion">
+
+                <div class="contenedor-imagenes-intermedias" id="contenedorIntermedias">
+                    <div class="grupo-imagenes-intermedias">
+                        <img src="/IMG_5876.jpg" alt="IMG 5876" class="imagen-intermedia img-int-1" />
+                        <img src="/IMG_5885.jpg" alt="IMG 5885" class="imagen-intermedia img-int-2" />
+                    </div>
                 </div>
+
+                <div class="fila-inicial" id="filaImagenes">
+                    <img src="/IMG_5882_2.avif" alt="IMG 5882" class="imagen-base imagen-izq" />
+                    <img src="/IMG_5884_2.avif" alt="IMG 5884" class="imagen-base imagen-der" />
+                </div>
+
             </div>
 
             <div class="contenedor-fondo-negro" id="zonaNegra">
                 <div class="fondo-negro-zona"></div>
-            </div>
-
-            <div class="fila-inicial" id="filaImagenes">
-                <img src="/IMG_5882_2.avif" alt="IMG 5882" class="imagen-base imagen-izq" />
-                <img src="/IMG_5884_2.avif" alt="IMG 5884" class="imagen-base imagen-der" />
             </div>
         </section>
 
@@ -47,34 +54,25 @@ import Layout from '../layouts/maestra.astro';
         scrollTrigger: {
             trigger: "#escena1",
             start: "top top",
-            end: "+=5500", // <--- Recorrido de scroll muy largo para que necesites varios giros de rueda completos
+            end: "+=5500",
             pin: true,
             pinSpacing: true,
-            scrub: 1 // <--- El scrub con un número (como 1) suaviza la inercia para que acompañe el movimiento del ratón con precisión
+            scrub: 1
         }
     });
 
-    // Fase 1: Apertura escalonada muy larga (muchos steps y duración amplia)
-    tl1.to(".imagen-izq", { x: "-75vw", duration: 4, ease: "steps(24)" }) 
+    tl1.to(".imagen-izq", { x: "-75vw", duration: 4, ease: "steps(24)" })
        .to(".imagen-der", { x: "75vw", duration: 4, ease: "steps(24)" }, "<")
        .to(".fondo-negro-zona", { opacity: 0.5, duration: 5, ease: "steps(10)" }, "<")
        .to("#zonaNegra", { opacity: 0, duration: 3.2, ease: "steps(6)" }, "<")
-       
-       // Fase 2: Pausa intermedia con las imágenes abiertas
-       .to({}, { duration: 1.5 }) 
-
-       // Fase 3: El notebook y sus imágenes interiores aparecen fundiéndose
+       .to({}, { duration: 1.5 })
        .to(".fondo-notebook", { opacity: 1, duration: 2.5, ease: "steps(6)" })
        .to(".contenedor-imagenes-intermedias", { opacity: 1, duration: 2.5, ease: "steps(6)" }, "<")
-       
-       // Fase 4: Tiempo estático final viendo el notebook antes de pasar a la siguiente escena
-       .to({}, { duration: 4 }); 
+       .to({}, { duration: 4 });
 </script>
 
 <style>
     :global(html, body) { 
-        margin: 0; 
-        padding: 0; 
         width: 100vw; 
         overflow-x: hidden; 
         background-color: #ffffffef; 
@@ -91,7 +89,7 @@ import Layout from '../layouts/maestra.astro';
         left: 50%;
         transform: translateX(-50%);
         width: 155vw;
-        height: 180px;
+        height: 16.67vh;
         background: linear-gradient(to bottom, 
             rgba(255, 255, 255, 1) 30%, 
             rgba(255, 255, 255, 0.85) 40%, 
@@ -123,10 +121,8 @@ import Layout from '../layouts/maestra.astro';
 
     .fondo-carpet {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -136,26 +132,36 @@ import Layout from '../layouts/maestra.astro';
 
     .fondo-notebook {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
         background-image: url('/notebook.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         z-index: 1;
-        opacity: 0; 
-        transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); 
+        opacity: 0;
     }
 
-    .contenedor-fondo-negro {
+    /* --- LA CAJA CLAVE ---
+       container-type: size convierte esta caja en la referencia para cqw/cqh de sus hijos.
+       width/height con min() la fuerza a mantener SIEMPRE proporción 16:9,
+       centrada dentro de la pantalla (como un letterbox), sea cual sea la ventana real. */
+    .caja-composicion {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 2050px; 
-        height: 1520px; 
+        width: min(100vw, 177.78vh);   /* 177.78vh = 100vh * 16/9 */
+        height: min(100vh, 56.25vw);   /* 56.25vw  = 100vw * 9/16 */
+        container-type: size;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    .contenedor-fondo-negro {
+        position: absolute;
+        top: 0; left: 0;
+        width: 200vw; height: 200vh;
         z-index: 2;
         pointer-events: none;
         background-color: rgb(255, 255, 255);
@@ -163,56 +169,64 @@ import Layout from '../layouts/maestra.astro';
 
     .fondo-negro-zona {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
         background-image: url('/black.avif');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
     
+    /* A partir de aquí, todo en cqw/cqh: medido respecto a .caja-composicion,
+       que ya tiene la proporción fija. Los números (%) son los mismos que tenías
+       en vw/vh, solo cambia la unidad de referencia. */
+
     .fila-inicial { 
         display: flex; 
         align-items: center; 
-        gap: 20px; 
+        gap: 1.04cqw;
         position: absolute; 
         z-index: 3; 
         left: 49.5%; 
-        transform: translateX(-50%);
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: auto;
     }
 
-    .imagen-base { height: 300px; width: auto; object-fit: contain; }
+    .imagen-base { height: 40cqh; width: auto; object-fit: contain; }
 
     .contenedor-imagenes-intermedias {
-        position: relative;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 2; 
-        opacity: 0; 
+        opacity: 0;
+        pointer-events: auto;
     }
 
     .grupo-imagenes-intermedias {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 40px; 
+        gap: 2.08cqw;
     }
 
     .imagen-intermedia {
-        height: 40vh; 
+        height: 40cqh; 
         width: auto;
         object-fit: contain;
     }
 
     .img-int-1 { 
-        transform: translateY(33px) translateX(-60px) scale(1.9) rotate(0deg); 
+        transform: translateY(3.06cqh) translateX(-3.13cqw) scale(1.9) rotate(0deg);
     } 
 
     .img-int-2 { 
-        transform: translateY(35px) translateX(120px) scale(1.9) rotate(0deg); 
+        transform: translateY(3.24cqh) translateX(6.25cqw) scale(1.9) rotate(0deg);
     }  
 
     .contenedor-imagenes-estaticas {
@@ -220,13 +234,13 @@ import Layout from '../layouts/maestra.astro';
         display: flex;
         justify-content: center;
         align-items: center;
-        gap:20px;
+        gap: 1.04vw;
         z-index: 2; 
-        transform: translateX(250px);
+        transform: translateX(13.02vw);
     }
 
     .imagen-estatica {
-        height: 300px;
+        height: 27.78vh;
         width: auto;
         object-fit: contain;
     }

@@ -1,11 +1,8 @@
 ---
 import Layout from '../layouts/maestra.astro';
-import Bolas from '../components/bolas.astro';
 ---
 
-<Layout showSplash={true} showLogo={false} title="Leyre Serafina Gutiérrez Cruz">
-    <Bolas />
-
+<Layout showSplash={true} showLogo={false} showBolas={true} title="Leyre Serafina Gutiérrez Cruz">
     <div class="contenedor-principal-inicio">
         <pre class="arte-ascii">
 (')) ^v^ _             (`)_
@@ -20,7 +17,7 @@ import Bolas from '../components/bolas.astro';
             <a href="/3" class="franja-obra"><h3 class="titulo-obra">HAY GRACIA EN OCUPAR LO INTERNO</h3></a>
             <a href="/4" class="franja-obra"><h3 class="titulo-obra">DÓNDE QUEDAN LOS ESPACIOS?</h3></a>
         </div>
-        
+
         <a href="/leyreserafina" class="franja-nombre-azul franja-azul-compacta">
             <h2 class="titulo-nombre-azul">LEYRE SERAFINA GUTIERREZ CRUZ</h2>
             <span class="etiqueta-info-azul">+ CV / BIO</span>
@@ -29,15 +26,8 @@ import Bolas from '../components/bolas.astro';
 </Layout>
 
 <style>
-    :global(html), :global(body) {
-        overflow: hidden !important;
-        height: 100vh !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background-color: transparent !important;
-    }
-
     :global(body) {
+        background-color: transparent !important;
         background-image: url('/public/piolin.avif') !important;
         background-size: cover !important;
         background-position: center !important;
@@ -51,14 +41,14 @@ import Bolas from '../components/bolas.astro';
         margin: 0;
         color: #0df7ff;
         font-weight: 1200;
-        font-size: 1rem;
-        cursor: pointer; 
-        align-self: flex-start;  
-        margin-left: 20%;        
+        font-size: 1.3rem;
+        cursor: pointer;
+        align-self: flex-start;
+        margin-left: 20%;
     }
 
     .arte-ascii:hover {
-        color: #4208ff; 
+        color: #4208ff;
     }
 
     .arte-ascii .texto-oculto {
@@ -72,17 +62,17 @@ import Bolas from '../components/bolas.astro';
     }
 
     .arte-ascii:hover .texto-oculto {
-        max-width: 350px; 
+        max-width: 350px;
         opacity: 1;
     }
 
     .contenedor-principal-inicio {
-        height: calc(100vh - 120px);
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: stretch;
         justify-content: center;
-        gap: 10px;   
+        gap: 10px;
         box-sizing: border-box;
         padding: 0rem;
         width: 100%;
@@ -104,7 +94,7 @@ import Bolas from '../components/bolas.astro';
         background-color: #ffe65d;
         text-decoration: none;
         box-sizing: border-box;
-        padding: 0.1rem 2rem; 
+        padding: 0.1rem 2rem;
         width: 100%;
         transition: background-color 0.2s ease;
         position: relative;
@@ -116,7 +106,7 @@ import Bolas from '../components/bolas.astro';
     }
 
     .titulo-obra {
-        font-size: 3rem; 
+        font-size: 4rem;
         font-weight: 900;
         color: #d2384a;
         text-transform: uppercase;
@@ -134,34 +124,34 @@ import Bolas from '../components/bolas.astro';
     }
 
     .franja-obra:hover > .titulo-obra,
-    .franja-obra:hover .titulo-obra {   
+    .franja-obra:hover .titulo-obra {
         background-position: 0% 0;
         filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
     }
 
     .franja-nombre-azul {
         text-decoration: none;
-        background-color: #79f984; 
+        background-color: #79f984;
         transition: background-color 0.2s ease;
         position: relative;
         contain: layout paint;
     }
 
     .franja-nombre-azul:hover {
-        background-color: #50b3fe; 
+        background-color: #50b3fe;
     }
 
     .franja-azul-compacta {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 2rem; 
+        padding: 0.3rem 2rem;
         box-sizing: border-box;
         width: 100%;
     }
 
     .franja-azul-compacta .titulo-nombre-azul {
-        font-size: 2rem;
+        font-size: 3.2rem;
         font-weight: 900;
         margin: 0;
         line-height: 1;

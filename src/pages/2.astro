@@ -2,7 +2,7 @@
 import Layout from '../layouts/maestra.astro';
 ---
 
-<Layout title="2">
+<Layout title="2" pantallaCompleta={true}>
     <div class="media-luna-fondo"></div>
     
     <div class="scroll-container">
@@ -133,8 +133,6 @@ import Layout from '../layouts/maestra.astro';
 
 <style>
     :global(html, body) { 
-        margin: 0; 
-        padding: 0; 
         width: 100vw; 
         overflow-x: hidden; 
         background-color: #ffffff; 
@@ -162,7 +160,7 @@ import Layout from '../layouts/maestra.astro';
         border-radius: 0 0 50% 50%;
         z-index: 998;
         pointer-events: none;
-        will-change: opacity; /* Añadido para optimizar la transición */
+        will-change: opacity;
     }
 
     .scroll-container { 

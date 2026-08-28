@@ -1,14 +1,31 @@
 ---
 import Marquesina from '../components/superior.astro';
+import Bolas from '../components/bolas.astro';
 
 interface Props {
     title?: string;
     showSplash?: boolean;
     showLogo?: boolean;
+    showBolas?: boolean;
+    /* true = esta página controla su propio 100vh/100vw (scroll-jacking, vídeo, GSAP...).
+       false (por defecto) = contenido de tamaño fijo, escalado como el lienzo de la home. */
+    pantallaCompleta?: boolean;
 }
 
-const { title = "Leyre Serafina Gutiérrez Cruz", showSplash = false, showLogo = true } = Astro.props;
+const {
+    title = "Leyre Serafina Gutiérrez Cruz",
+    showSplash = false,
+    showLogo = true,
+    showBolas = false,
+    pantallaCompleta = false,
+} = Astro.props;
 const añoActual = new Date().getFullYear();
+
+// ── ÚNICO LUGAR DEL PROYECTO donde se define el tamaño de referencia ──
+// Mide tu ventana en el portátil (consola: innerWidth + 'x' + innerHeight)
+// y pon esos dos números aquí. No se tocan en ningún otro sitio.
+const DISENO_ANCHO = 1920;
+const DISENO_ALTO = 1080;
 ---
 
 <html lang="en">
@@ -27,29 +44,70 @@ const añoActual = new Date().getFullYear();
         </script>
 
         <style is:global>
+            /* Regla 2: rem fijo de verdad, no depende de ajustes de accesibilidad del navegador */
+            html {
+                font-size: 16px;
+                height: 100%;
+            }
+
+            /* Regla 3: box-sizing consistente en todo */
+            *, *::before, *::after {
+                box-sizing: border-box;
+            }
+
             .sin-splash #splash-screen {
                 display: none !important;
             }
 
-          body {
+            body {
                 background-color: #faf9f5;
                 margin: 0;
                 font-family: 'AMANO', sans-serif;
-                display: flex;
-                flex-direction: column;
                 min-height: 100vh;
-                box-sizing: border-box;
                 cursor: url('/gifglitter.gif'), auto !important;
+            }
+
+            /* Solo las páginas con lienzo escalado bloquean el scroll (son de una sola pantalla).
+               Las pantallaCompleta necesitan scroll real para GSAP ScrollTrigger. */
+            body.lienzo-activo {
+                overflow: hidden;
             }
 
             a, button, .splash-grupo, .logo-inicio-flotante {
                 cursor: url('/gifglitter.gif'), pointer !important;
             }
 
-            html {
-                height: 100%;
+            /* ── EL LIENZO ──
+               Tamaño fijo = tu diseño de portátil, sin excepciones.
+               Se centra y se escala entero con un solo transform (ver script al final).
+               Todo lo que va DENTRO usa únicamente px/rem fijos — nunca vw/vh/%. */
+            #lienzo {
+                width: calc(var(--diseno-ancho) * 1px);
+                height: calc(var(--diseno-alto) * 1px);
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform-origin: center center;
+                display: flex;
+                flex-direction: column;
             }
 
+            main {
+                flex: 1;
+                min-height: 0;
+                padding-top: 24px; /* reserva el hueco de la marquesina, que vive fuera del lienzo */
+            }
+
+            /* Cuando la página es pantallaCompleta, main no vive dentro del lienzo:
+               ocupa el viewport real directamente (para scroll-jacking, vídeo, GSAP...). */
+            main.pantalla-completa {
+                width: 100vw;
+                min-height: 100vh;
+                padding-top: 0;
+                overflow: visible;
+            }
+
+            /* ── FUERA DEL LIENZO: chrome de pantalla completa, deliberadamente sin escalar ── */
            #splash-screen {
                 position: fixed;
                 top: 0; left: 0; width: 100vw; height: 100vh;
@@ -62,7 +120,6 @@ const añoActual = new Date().getFullYear();
                 z-index: 99999;
                 cursor: url('/gifglitter.gif'), pointer !important;
                 transition: opacity 0.4s ease;
-                box-sizing: border-box;
                 padding: 2rem;
             }
 
@@ -119,9 +176,9 @@ const añoActual = new Date().getFullYear();
 
             .logo-inicio-flotante {
                 position: fixed;
-                top: 5%;                 /* Arriba */
-                left: 50%;               /* Se coloca en la mitad de la pantalla */
-                transform: translateX(-50%); /* Centra perfectamente el elemento respecto a su propio ancho */
+                top: 5%;
+                left: 50%;
+                transform: translateX(-50%);
                 z-index: 999;
                 text-decoration: none;
                 transition: opacity 0.2s ease;
@@ -131,12 +188,11 @@ const añoActual = new Date().getFullYear();
             }
 
             .logo-inicio-flotante img {
-                width: 105px; 
+                width: clamp(80px, 6vw, 160px);
                 height: auto;
                 filter: drop-shadow(0px 0px 0.6px #3300ff) drop-shadow(0px 0px 0.6px #000);
             }
 
-            
             .franja-nombre-azul {
                 display: flex;
                 align-items: center;
@@ -158,16 +214,11 @@ const añoActual = new Date().getFullYear();
                 letter-spacing: 1px;
             }
 
-            main {
-                flex: 1;
-            }
-
             .footer-contenedor {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 width: 100%;
-                box-sizing: border-box;
                 padding: 1rem 2rem;
                 background-color: transparent;
                 margin-top: auto; 
@@ -188,7 +239,7 @@ const añoActual = new Date().getFullYear();
         </style>
     </head>
 
-    <body>
+    <body class={pantallaCompleta ? '' : 'lienzo-activo'}>
         {showSplash && (
             <div id="splash-screen">
                 <div></div>
@@ -209,19 +260,29 @@ const añoActual = new Date().getFullYear();
             </a>
         )}
 
-        <main>
-            <slot />
-        </main>
+        {showBolas && <Bolas />}
 
-        <div class="footer-contenedor">
-            <div class="footer-copyright">
-                © {añoActual}, LEYRE SERAFINA GUTIERREZ CRUZ
+        {pantallaCompleta ? (
+            <main class="pantalla-completa">
+                <slot />
+            </main>
+        ) : (
+            <div id="lienzo" style={`--diseno-ancho:${DISENO_ANCHO}; --diseno-alto:${DISENO_ALTO};`}>
+                <main>
+                    <slot />
+                </main>
+
+                <div class="footer-contenedor">
+                    <div class="footer-copyright">
+                        © {añoActual}, LEYRE SERAFINA GUTIERREZ CRUZ
+                    </div>
+                </div>
             </div>
-        </div>
+        )}
 
         <script>
             const splash = document.getElementById('splash-screen');
-            
+
             if (splash) {
                 if (sessionStorage.getItem('splashVisto') === 'true') {
                     splash.remove();
@@ -232,6 +293,28 @@ const añoActual = new Date().getFullYear();
                         setTimeout(() => splash.remove(), 400);
                     });
                 }
+            }
+        </script>
+
+        <script is:inline>
+            // Regla 1: este es el ÚNICO sitio de todo el proyecto que puede
+            // mirar el tamaño real de la pantalla. Todo lo demás son px/rem fijos.
+            const lienzo = document.getElementById('lienzo');
+
+            if (lienzo) {
+                const disenoAncho = parseFloat(getComputedStyle(lienzo).getPropertyValue('--diseno-ancho'));
+                const disenoAlto = parseFloat(getComputedStyle(lienzo).getPropertyValue('--diseno-alto'));
+
+                function ajustarEscala() {
+                    const escalaX = window.innerWidth / disenoAncho;
+                    const escalaY = window.innerHeight / disenoAlto;
+                    const escala = Math.max(escalaX, escalaY); // "cover": llena siempre, recorta si sobra
+
+                    lienzo.style.transform = `translate(-50%, -50%) scale(${escala})`;
+                }
+
+                ajustarEscala();
+                window.addEventListener('resize', ajustarEscala);
             }
         </script>
     </body>
