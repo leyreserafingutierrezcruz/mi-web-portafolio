@@ -1,21 +1,33 @@
 ---
 // src/components/Marquesina.astro
+
+const ahora = new Date();
+
+const fechaFormateada = ahora.toLocaleDateString('es-ES', {
+    timeZone: 'Europe/Madrid',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+});
+
+const inicioAnio = new Date(ahora.getFullYear(), 0, 1);
+const diferenciaDias = Math.floor((ahora.getTime() - inicioAnio.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+// ── AQUÍ SE CONFIGURA PARA 4 DÍGITOS (SOLO HORA Y MINUTOS) ──
+const horaMadridInicial = ahora.toLocaleTimeString('es-ES', {
+    timeZone: 'Europe/Madrid',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+});
 ---
 
 <div class="sub-superior">
     <div class="sub-track" id="superiorSub">
-        <span class="texto-base">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⡴⢲⡄⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⢀⡞⠀⠀⡇⠀⢀⡴⠋⠁⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣸⠁⠀⠀⡇⣠⠟⠀⠀⠀⣼⣠⣤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣿⠀⢠⢤⡿⠃⣀⠀⢀⡞⠉⠁⠀⠀⠈⠙⠶⡄⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣻⣰⡏⣼⢁⡴⠋⣰⠋⠀⠀⠀⠀⠀⠀⠀⠀⠹⡄⣀⡀⠀⠀⠀⠀
-⠀⠀⠀⢀⡾⠋⠉⠁⠀⠙⠁⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡈⢷⠀⠀⠀⠀
-⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⢀⣧⡾⠁⠀⠀⠀
-⠀⠀⠀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⣾⠃⠀⠀⠀⠀⠀
-⠀⠀⠀⣹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠁⠀⠀⡀⠀⠀⢰⡾⠋⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⻻⡇⣀⡀⠀⠺⣿⠇⠀⣀⣤⣄⣀⣠⣬⣥⣤⠾⠛⠁⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠉⠛⠓⠂⠤⠤⠖⠊⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="texto-base">
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀Hoy y por el momento, solo hoy es⠀{fechaFormateada} !!, andamos a día {diferenciaDias} del año. Tome hora son las <span class="reloj-marquesina">{horaMadridInicial}</span> (MAD) ⠀&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
     </div>
 </div>
 
@@ -33,6 +45,22 @@
             track.appendChild(clone);
         }
     }
+
+    // Actualizamos en bucle manteniendo los 4 dígitos (sin segundos)
+    setInterval(() => {
+        const ahoraLocal = new Date();
+        const horaActualizada = ahoraLocal.toLocaleTimeString('es-ES', {
+            timeZone: 'Europe/Madrid',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+
+        const relojes = document.querySelectorAll('.reloj-marquesina');
+        relojes.forEach(el => {
+            el.textContent = horaActualizada;
+        });
+    }, 1000);
 </script>
 
 <style>
@@ -41,11 +69,8 @@
         top: 0;
         left: 0;
         width: 100vw;
-        /* antes: height fija de 24px.
-           ahora: escala entre 16px (portátil pequeño) y 24px (monitor grande),
-           con un punto intermedio fluido basado en el ancho de la ventana */
         height: clamp(10px, 1.1vw, 16px);
-        background-color: #505050;
+        background-color: #fafafa;
         overflow: hidden;
         z-index: 9999;
         cursor: url('/gifglitter.gif'), pointer !important;
@@ -68,17 +93,24 @@
         100% { filter: hue-rotate(360deg); }
     }
 
-    .sub-track span {
+    .sub-track span.texto-base {
         font-family: inherit;
-        /* antes: 12px fijo. ahora escala junto con la barra */
-        font-size:clamp(6px, 0.6vw, 9px);
-        background: linear-gradient(to right, red, orange, yellow, rgb(91, 191, 91), cyan, blue, violet);
+        font-size: clamp(6px, 0.6vw, 9px);
+        background: rgb(2, 30, 14);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: arcoiris-texto 6s linear infinite;
-        /* antes: line-height fijo de 24px, ahora sigue a la altura de la barra */
+       
         line-height: clamp(10px, 1.1vw, 16px);
         display: inline-block;
+    }
+
+    .sub-track span span {
+        font-family: inherit;
+        font-size: inherit;
+        background: inherit;
+        -webkit-background-clip: inherit;
+        -webkit-text-fill-color: inherit;
+        animation: inherit;
     }
 
     @keyframes moverSub {

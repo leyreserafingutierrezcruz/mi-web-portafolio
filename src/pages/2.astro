@@ -15,28 +15,20 @@ import Layout from '../layouts/maestra.astro';
             </div>
         </section>
 
-        <div class="pin-wrapper" id="pinWrapper">
-            <section class="panel-sub" id="escena2">  
-                <div class="contenedor-video" id="contenedor-clic">
-                    <video id="mi-video" class="video-obra" autoplay muted loop playsinline preload="auto">
-                        <source src="/hojas_video.mp4" type="video/mp4" />
-                        Tu navegador no soporta la reproducción de video.
-                    </video>
-                    <button id="boton-audio" class="btn-audio" type="button" aria-label="Audio">
-                        <span class="contenedor-icono-musical">
-                            <span class="simbolo-musical">♫</span>
-                            <span id="barra-tachar" class="barra-tachado"></span>
-                        </span>
-                    </button>
-                </div>
-            </section>
-
-            <section class="panel-sub" id="escena3">
-                <div class="visor-mariposa-contenedor" id="contenedorMariposa">
-                    <img src="/mariposa.png" alt="Mariposa" class="imagen-mariposa" id="img-mariposa" />
-                </div>
-            </section>
-        </div>
+        <section class="panel" id="escena2">  
+            <div class="contenedor-video" id="contenedor-clic">
+                <video id="mi-video" class="video-obra" autoplay muted loop playsinline preload="auto">
+                    <source src="/hojitas_video.mp4" type="video/mp4" />
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+                <button id="boton-audio" class="btn-audio" type="button" aria-label="Audio">
+                    <span class="contenedor-icono-musical">
+                        <span class="simbolo-musical">♫</span>
+                        <span id="barra-tachar" class="barra-tachado"></span>
+                    </span>
+                </button>
+            </div>
+        </section>
 
     </div>
 </Layout>
@@ -76,51 +68,26 @@ import Layout from '../layouts/maestra.astro';
         }, 500); 
     }
 
-    // 3. Animación aleatoria de la mariposa (Escena 3)
-    const mariposa = document.getElementById('img-mariposa') as HTMLImageElement;
-    const fuentesMariposa = ['/mariposa.png', '/mariposa_2.png'];
-    let indiceMariposa = 0;
-
-    if (mariposa) {
-        const cambiarMariposa = () => {
-            indiceMariposa = (indiceMariposa + 1) % fuentesMariposa.length;
-            mariposa.src = fuentesMariposa[indiceMariposa];
-
-            const esLento = Math.random() < 0.20; 
-            const tiempoAleatorio = esLento ? 1000 : Math.floor(Math.random() * (160 - 120 + 1)) + 120;
-
-            setTimeout(cambiarMariposa, tiempoAleatorio);
-        };
-
-        setTimeout(cambiarMariposa, 500);
-    }
-
-    // 4. Animación GSAP de la línea de tiempo (Pin y transición)
-    const tlSub = gsap.timeline({
-        scrollTrigger: {
-            trigger: "#pinWrapper",
-            start: "top top",
-            end: "+=2000", 
-            pin: true,
-            scrub: true
+    // 3. Ocultar la media luna al llegar al final
+    ScrollTrigger.create({
+        trigger: "#escena2",
+        start: "top center",
+        onEnter: () => {
+            gsap.to(".media-luna-fondo", { opacity: 0, duration: 0.1 });
+        },
+        onLeaveBack: () => {
+            gsap.to(".media-luna-fondo", { opacity: 1, duration: 0.1 });
         }
     });
 
-    tlSub
-        .to({}, { duration: 6 }) 
-        .to("#escena2", { opacity: 0, duration: 0.5 }) 
-        .fromTo("#escena3", { opacity: 0 }, { opacity: 1, duration: 5 }, "<")
-        // AQUÍ OCULTAMOS LA MEDIA LUNA JUSTO AL ENTRAR EN LA MARIPOSA:
-        .to(".media-luna-fondo", { opacity: 0, duration: 0.1 }, "<"); 
-
-    // 5. Control de inercia del scroll
+    // 4. Control de inercia del scroll
     let isScrolling = false;
     window.addEventListener("wheel", (e) => {
         if (isScrolling) return;
         const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
         
-        if (scrollY < windowHeight * 3) {
+        if (scrollY < windowHeight * 2) {
             e.preventDefault(); 
             isScrolling = true;
             const jumpSize = 80; 
@@ -217,33 +184,10 @@ import Layout from '../layouts/maestra.astro';
         display: block;
     }
 
-    .pin-wrapper {
-        position: relative;
-        width: 100vw;
-        height: 100vh;
-    }
-
-    .panel-sub {
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-        box-sizing: border-box;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
     #escena2 {
         background-image: url('/hojas2.avif');
-        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
-        mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
-        z-index: 1;
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,1) 100%);
+        mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,1) 100%);
     }
 
     .contenedor-video {
@@ -299,33 +243,5 @@ import Layout from '../layouts/maestra.astro';
         transform: rotate(-45deg);
         opacity: 0;
         transition: opacity 0.2s ease;
-    }
-
-    #escena3 {
-        background-color: #ffffff;
-        z-index: 2;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .visor-mariposa-contenedor {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        box-sizing: border-box;
-        padding: 0;
-        overflow: hidden;
-        pointer-events: none;
-    }
-
-    .imagen-mariposa {
-        width: 100vw;
-        height: 100vh;
-        object-fit: contain;
-        object-position: center;
-        display: block;
     }
 </style>
