@@ -2,26 +2,22 @@
 import Layout from '../layouts/maestra.astro';
 ---
 
-<Layout title="CURRÍCULUM — Leyre Serafina Gutiérrez Cruz">
+<Layout title="CURRÍCULUM — Leyre Serafina Gutiérrez Cruz" pantallaCompleta={true}>
     
-    <!-- Contenedor donde aparecerán las estelas del ratón -->
     <div class="rastros-container" id="rastros-container"></div>
 
-    <!-- Contenido principal del currículum con el arte ASCII -->
     <main class="contenido-cv">
         <div class="contenedor-ascii-cv">
             <pre class="arte-ascii">
-       .-.      _______                             .  '  *   .  . '
-      ()``; |==|_______D                              .  * * -+-
-      /  ('        /|\                             .    * .    '  *
-  (  /   |        / | \                                * .  ' .  .
-  \(__)_]]      /  |  \                            *   *  .   .
-                                                     '   *
+    .-.       _______                    .  '  * .  . '
+   ()``; |==|_______D                    .  * * -+-
+   /  ('         /|\                    .    * .    '  *
+ (  /   |         / | \                    * .  ' .  .
+ \(__)_]]       /  |  \                  * * .   .
+                                            '   *
 ------------------------------------------------
             </pre>
         </div>
-        
-        <!-- Aquí puedes seguir añadiendo el resto de secciones de tu currículum -->
     </main>
 
 </Layout>
@@ -34,6 +30,7 @@ import Layout from '../layouts/maestra.astro';
             const rastro = document.createElement('div');
             rastro.className = 'punto-rastro';
             
+            // Usamos pageX/pageY o clientX directos para máxima precisión en fixed
             rastro.style.left = `${e.clientX}px`;
             rastro.style.top = `${e.clientY}px`;
             
@@ -44,17 +41,18 @@ import Layout from '../layouts/maestra.astro';
                 setTimeout(() => {
                     rastro.remove();
                 }, 300);
-            }, 1000);
+            }, 800);
         });
     }
 </script>
 
 <style>
+    /* Forzamos que la página de este layout no tenga márgenes raros */
     :global(html, body) {
         margin: 0;
         padding: 0;
         overflow-x: hidden;
-        max-width: 100vw;
+        width: 100%;
         background-color: #ffffff;
     }
 
@@ -65,21 +63,21 @@ import Layout from '../layouts/maestra.astro';
         width: 100vw;
         height: 100vh;
         pointer-events: none;
-        z-index: 1;
+        z-index: 999; /* Por debajo del contenido principal pero cubriendo toda la pantalla */
     }
 
     :global(.punto-rastro) {
-        position: absolute;
-        width: 120px;
-        height: 120px;
+        position: fixed; /* Cambiado a fixed para que respete el scroll de la ventana sin desviarse */
+        width: 100px;
+        height: 100px;
         transform: translate(-50%, -50%);
         pointer-events: none;
-        border-radius: 0; 
+        border-radius: 50%; 
         background: radial-gradient(
             circle,
-            rgba(255, 0, 217, 0.4),
-            rgba(255, 215, 0, 0.25),
-            rgba(70, 255, 218, 0.168),
+            rgba(255, 0, 217, 0.35),
+            rgba(255, 215, 0, 0.2),
+            rgba(70, 255, 218, 0.1),
             transparent 70%
         );
         transition: opacity 0.3s ease-out;
@@ -88,15 +86,15 @@ import Layout from '../layouts/maestra.astro';
 
     .contenido-cv {
         position: relative;
-        z-index: 2; /* Se sitúa por encima de la estela del ratón */
-        margin-top: 130px;
+        z-index: 1000; /* Asegura que el texto esté siempre accesible y por encima */
+        margin-top: 150px;
         padding: 2rem;
         box-sizing: border-box;
         width: 100%;
-        min-height: calc(100vh - 130px);
+        min-height: calc(100vh - 150px);
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centra el contenido horizontalmente */
+        align-items: center;
     }
 
     .contenedor-ascii-cv {
@@ -107,14 +105,14 @@ import Layout from '../layouts/maestra.astro';
         font-family: monospace;
         font-size: 1.2vw;
         line-height: 1.1;
-        color: #111111; /* Color oscuro para que contraste bien con el fondo blanco */
+        color: #111111;
         margin: 0;
         white-space: pre;
     }
 
     @media (max-width: 768px) {
         .arte-ascii {
-            font-size: 2.5vw; /* Se adapta automáticamente en pantallas pequeñas */
+            font-size: 2.5vw;
         }
     }
 </style>
